@@ -10,7 +10,7 @@ import {
 import { api } from "@/utils/api";
 import { useRouter } from "next/router";
 
-const publicPages = ["/login"];
+const publicPages = ["/sign-in", "/sign-up"];
 
 const App = ({ Component, pageProps }: AppProps) => {
   const { pathname } = useRouter();
@@ -32,9 +32,28 @@ const App = ({ Component, pageProps }: AppProps) => {
             actionLink: "Cadastrar-se",
           },
         },
+        signUp: {
+          start: {
+            title: "Crie uma conta",
+            subtitle: "para entrar no lokadin",
+            actionText: "Já tem uma conta?",
+            actionLink: "Fazer Login",
+          },
+        },
       }}
     >
-      <Component {...pageProps} />
+      {isPublicPage ? (
+        <Component {...pageProps} />
+      ) : (
+        <>
+          <SignedIn>
+            <Component {...pageProps} />
+          </SignedIn>
+          <SignedOut>
+            <RedirectToSignIn />
+          </SignedOut>
+        </>
+      )}
     </ClerkProvider>
   );
 };
