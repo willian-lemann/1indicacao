@@ -10,33 +10,24 @@ datasource db {
 }
 
 model User {
-  id     String @unique @default(uuid())
-  name   String
-  userId String @unique
+  id     String  @unique @default(uuid())
+  name   String?
+  userId String  @unique
   role   String
+  jobs   Job[]
 
   @@map("users")
 }
 
-model Employer {
-  id String @unique @default(uuid())
-
-  @@map("employers")
-}
-
 model Job {
   id        String   @unique @default(uuid())
-  name      String
-  isActive  Boolean
+  isActive  Boolean  @default(false)
   positions Int
   salary    String
   createdAt DateTime @default(now())
+  User      User?    @relation(fields: [userId], references: [id])
+  userId    String?
 
+  @@unique([userId])
   @@map("jobs")
-}
-
-model Candidate {
-  id String @unique @default(uuid())
-
-  @@map("candidates")
 }

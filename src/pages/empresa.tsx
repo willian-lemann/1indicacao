@@ -7,8 +7,8 @@ export default function Employer() {
       <Tab.Group>
         <Header />
         <Tab.Panels>
-          <Tab.Panel>1</Tab.Panel>
-          <Tab.Panel>2</Tab.Panel>
+          <Tab.Panel>Meu perfil</Tab.Panel>
+          <Tab.Panel>Candidatos</Tab.Panel>
         </Tab.Panels>
       </Tab.Group>
     </div>

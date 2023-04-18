@@ -2,18 +2,20 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Tab } from "@headlessui/react";
+import { useUser } from "@clerk/nextjs";
+import { useAuth } from "@/features/authentication/hooks/use-auth";
 
 export function Header() {
-  const role: "employer" | "candidate" = "candidate";
+  const { user } = useAuth();
 
   return (
     <header className="container flex items-center justify-between py-8">
       <div>logo</div>
 
-      <Tab.List className="space-x-4">
+      <Tab.List className="space-x-4 flex items-center">
         <Tab className="outline-none">Meu Perfil</Tab>
 
-        {role === "candidate" ? (
+        {user?.role === "candidate" ? (
           <Tab className="outline-none">Vagas</Tab>
         ) : (
           <Tab className="outline-none">Candidatos</Tab>

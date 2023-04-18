@@ -1,8 +1,12 @@
+import { api } from "@/utils/api";
 import { classnames } from "@/utils/classnames";
+import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
 export default function Home() {
+  const { mutateAsync } = api.users.create.useMutation();
+
   const router = useRouter();
   const [role, setRole] = useState("");
 
@@ -10,8 +14,8 @@ export default function Home() {
     setRole(role);
   }
 
-  function handleSubmit() {
-    // criar usuario no banco com clerk id e com a role
+  async function handleSubmit() {
+    await mutateAsync({ role });
 
     if (role === "candidate") {
       router.push("/candidato");
