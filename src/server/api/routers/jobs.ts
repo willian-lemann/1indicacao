@@ -11,5 +11,27 @@ export const jobsRouter = createTRPCRouter({
   create: publicProcedure
     .input(createUserSchema)
     .mutation(async ({ input, ctx }) => {}),
-  getAll: publicProcedure.query(({ ctx }) => {}),
+
+  getAllByMe: publicProcedure.query(async ({ ctx }) => {
+    const jobs = await ctx.prisma.job.findMany({
+      where: {
+        userId: ctx.currentUser,
+      },
+
+      include: {
+        user: true,
+      },
+    });
+
+    return jobs;
+  }),
+
+  getAll: publicProcedure.query(async ({ ctx }) => {
+    const jobs = await ctx.prisma.job.findMany({
+      include: {
+        user: true,
+      },
+    });
+    return jobs;
+  }),
 });
