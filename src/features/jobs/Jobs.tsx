@@ -1,16 +1,11 @@
 import { useAuth } from "../authentication/hooks/use-auth";
 import { useMyJobs } from "./hooks/use-my-jobs";
 
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
-
-dayjs.extend(relativeTime);
+import { dayjs } from "@/lib/dayjs";
 
 export function Jobs() {
   const { jobs, isEmpty } = useMyJobs();
   const { user } = useAuth();
-
-  console.log(jobs);
 
   return (
     <div className="container py-4">
@@ -47,7 +42,7 @@ export function Jobs() {
             <p>{jobItem.isActive ? "Ativo" : "Fechada"}</p>
             <p>{jobItem.positions}</p>
             <p>{jobItem.salary}</p>
-            <p>{dayjs(jobItem.createdAt).fromNow()}</p>
+            <p>{dayjs(jobItem.createdAt).fromNow(false)}</p>
           </li>
         ))}
       </ul>
