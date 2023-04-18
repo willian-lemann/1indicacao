@@ -10,6 +10,33 @@ datasource db {
 }
 
 model User {
-  id   String @unique @default(uuid())
-  name String
+  id     String @unique @default(uuid())
+  name   String
+  userId String @unique
+  role   String
+
+  @@map("users")
+}
+
+model Employer {
+  id String @unique @default(uuid())
+
+  @@map("employers")
+}
+
+model Job {
+  id        String   @unique @default(uuid())
+  name      String
+  isActive  Boolean
+  positions Int
+  salary    String
+  createdAt DateTime @default(now())
+
+  @@map("jobs")
+}
+
+model Candidate {
+  id String @unique @default(uuid())
+
+  @@map("candidates")
 }
