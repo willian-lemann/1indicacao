@@ -1,6 +1,6 @@
 import { Header } from "@/components/Header";
 import { Candidates } from "@/features/users/Candidates";
-import { MyJobs } from "@/features/jobs/MyJobs";
+import { Jobs } from "@/features/jobs/Jobs";
 import { Tab } from "@headlessui/react";
 
 export default function Employer() {
@@ -16,7 +16,7 @@ export default function Employer() {
           </Tab.Panel>
 
           <Tab.Panel>
-            <MyJobs />
+            <Jobs />
           </Tab.Panel>
         </Tab.Panels>
       </Tab.Group>

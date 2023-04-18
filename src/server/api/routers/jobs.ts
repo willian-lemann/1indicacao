@@ -1,6 +1,10 @@
 import { z } from "zod";
 
-import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
+import {
+  createTRPCRouter,
+  privateProcedure,
+  publicProcedure,
+} from "@/server/api/trpc";
 
 const createUserSchema = z.object({
   name: z.string(),
@@ -12,14 +16,17 @@ export const jobsRouter = createTRPCRouter({
     .input(createUserSchema)
     .mutation(async ({ input, ctx }) => {}),
 
-  getAllByMe: publicProcedure.query(async ({ ctx }) => {
+  getAllByMe: privateProcedure.query(async ({ ctx }) => {
     const jobs = await ctx.prisma.job.findMany({
       where: {
         userId: ctx.currentUser,
       },
-
       include: {
-        user: true,
+        user: {
+          select: {
+            name: true,
+          },
+        },
       },
     });
 

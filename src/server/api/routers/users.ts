@@ -4,11 +4,12 @@ import { createTRPCRouter, privateProcedure } from "@/server/api/trpc";
 
 export const usersRouter = createTRPCRouter({
   create: privateProcedure
-    .input(z.object({ role: z.string() }))
+    .input(z.object({ role: z.string(), name: z.string() }))
     .mutation(async ({ input, ctx }) => {
       const userCreated = await ctx.prisma.user.create({
         data: {
           role: input.role,
+          name: input.name,
           userId: ctx.currentUser,
         },
       });
