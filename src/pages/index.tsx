@@ -1,11 +1,17 @@
 import { Loading } from "@/components/Loading";
+import { useAuth } from "@/features/authentication/hooks/use-auth";
+import { getSSRAppRouter } from "@/server/api/root";
 import { api } from "@/utils/api";
 import { classnames } from "@/utils/classnames";
+import { getAuth } from "@clerk/nextjs/server";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import { FormEvent, useState } from "react";
 
 export default function Home() {
   const { mutateAsync, isLoading } = api.users.create.useMutation();
+
+  const { user } = useAuth();
   const router = useRouter();
   const [role, setRole] = useState("");
   const [name, setName] = useState("");
@@ -94,3 +100,29 @@ export default function Home() {
     </main>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
+  const api = getSSRAppRouter(context);
+
+  const user = await api.users.byUserId();
+
+  if (user?.role === "employer") {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/empresa",
+      },
+      props: {},
+    };
+  }
+
+  return {
+    redirect: {
+      permanent: false,
+      destination: "/candidato",
+    },
+    props: {},
+  };
+};

@@ -2,6 +2,8 @@ import { createTRPCRouter } from "@/server/api/trpc";
 
 import { usersRouter } from "./routers/users";
 import { jobsRouter } from "./routers/jobs";
+import { prisma } from "../db";
+import { getAuth } from "@clerk/nextjs/server";
 
 /**
  * This is the primary router for your server.
@@ -13,5 +15,17 @@ export const appRouter = createTRPCRouter({
   jobs: jobsRouter,
 });
 
-// export type definition of API
 export type AppRouter = typeof appRouter;
+
+export const getSSRAppRouter = (context: any) => {
+  const { req } = context;
+
+  const { userId } = getAuth(req);
+
+  const app = appRouter.createCaller({
+    prisma,
+    currentUser: userId,
+  });
+
+  return app;
+};

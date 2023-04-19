@@ -10,11 +10,13 @@ datasource db {
 }
 
 model User {
-  id     String  @unique @default(uuid())
-  name   String?
-  userId String  @unique
-  role   String
-  jobs   Job[]
+  id          String  @unique @default(uuid())
+  name        String?
+  userId      String  @unique
+  role        String
+  jobs        Job[]
+  description String?
+  position    String?
 
   @@map("users")
 }

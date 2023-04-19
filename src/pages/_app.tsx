@@ -11,6 +11,7 @@ import {
 } from "@clerk/nextjs";
 import { api } from "@/utils/api";
 import { useRouter } from "next/router";
+import { AlertProvider } from "@/components/Alert";
 
 const publicPages = ["/sign-in", "/sign-up"];
 
@@ -44,6 +45,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         },
       }}
     >
+      <AlertProvider />
       {isPublicPage ? (
         <Component {...pageProps} />
       ) : (

@@ -1,5 +1,5 @@
 import { useAuth } from "../authentication/hooks/use-auth";
-import { useMyJobs } from "./hooks/use-my-jobs";
+import { useMyJobs } from "@/features/employers/hooks/use-my-jobs";
 
 import { dayjs } from "@/lib/dayjs";
 

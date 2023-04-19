@@ -9,7 +9,9 @@ export function Header() {
   return (
     <header className="shadow-md">
       <div className="container flex items-center justify-between py-6">
-        <div>logo</div>
+        <div className="relative h-10 w-10">
+          <Image src="/icon.svg" alt="icone" fill />
+        </div>
 
         <Tab.List className="space-x-4 flex items-center">
           <Tab className="outline-none">Meu Perfil</Tab>
