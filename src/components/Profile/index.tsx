@@ -9,28 +9,12 @@ import { addSuccessNotification } from "../Alert";
 
 export function Profile() {
   const { user } = useAuth();
-  const [isEditingName, setIsEditingName] = useState(false);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-    getValues,
-  } = useForm();
+  const { register, handleSubmit, setValue, watch } = useForm();
 
   const { mutateAsync } = api.users.update.useMutation();
 
   const onSubmit = handleSubmit(async (data) => {
-    await mutateAsync(
-      { ...data },
-      {
-        onSuccess: ({ name, description }) => {
-          setValue("name", name);
-          setValue("description", description);
-        },
-      }
-    );
-
+    await mutateAsync({ ...data });
     addSuccessNotification("Perfil salvo!");
   });
 
@@ -40,12 +24,12 @@ export function Profile() {
 
   useEffect(() => {
     if (user) {
+      console.log(user.name);
       setValue("name", user.name);
       setValue("description", user.description);
     }
   }, [setValue, user]);
 
-  console.log("render");
   return (
     <div className="container max-w-2xl">
       <form className="flex flex-col" onSubmit={onSubmit}>
@@ -61,7 +45,7 @@ export function Profile() {
 
           <div className="pl-4 flex items-center group">
             <p className="text-xl font-semibold cursor-pointer">
-              {getValues("name")}
+              {watch("name")}
             </p>
           </div>
         </div>

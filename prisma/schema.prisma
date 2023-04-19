@@ -23,13 +23,14 @@ model User {
 
 model Job {
   id        String   @unique @default(uuid())
-  isActive  Boolean  @default(false)
+  isActive  Boolean  @default(true)
   positions Int
   salary    String
+  position  String
   createdAt DateTime @default(now())
   user      User?    @relation(fields: [userId], references: [userId])
   userId    String?
 
-  @@unique([userId])
+  @@index([userId])
   @@map("jobs")
 }

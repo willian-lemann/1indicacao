@@ -37,9 +37,21 @@ export default function Home() {
     }
   }
 
+  function getLabel(next: boolean, role: string) {
+    if (!next) {
+      return "Selecione a opção que você se enquadra:";
+    }
+
+    if (role === "employer") {
+      return "Qual o nome da empresa?";
+    }
+
+    return "Qual seu nome?";
+  }
+
   return (
     <main className="flex min-h-screen flex-col gap-10 items-center justify-center list-none">
-      <h1 className="text-lg">Selecione a opção que você se enquadra:</h1>
+      <h1 className="text-lg">{getLabel(nextStep, role)}</h1>
       {nextStep ? (
         <div>
           <input
@@ -118,11 +130,17 @@ export const getServerSideProps: GetServerSideProps = async (
     };
   }
 
+  if (user?.role === "candidate") {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/candidato",
+      },
+      props: {},
+    };
+  }
+
   return {
-    redirect: {
-      permanent: false,
-      destination: "/candidato",
-    },
     props: {},
   };
 };
