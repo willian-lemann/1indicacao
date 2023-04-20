@@ -1,14 +1,20 @@
 import { Header } from "@/components/Header";
+import { Profile } from "@/components/Profile";
+import { Jobs } from "@/features/employers/Jobs";
 import { Tab } from "@headlessui/react";
 
 export default function Candidate() {
   return (
-    <div className="container">
+    <div>
       <Tab.Group>
         <Header />
         <Tab.Panels>
-          <Tab.Panel>1</Tab.Panel>
-          <Tab.Panel>2</Tab.Panel>
+          <Tab.Panel>
+            <Profile />
+          </Tab.Panel>
+          <Tab.Panel>
+            <Jobs />
+          </Tab.Panel>
         </Tab.Panels>
       </Tab.Group>
     </div>

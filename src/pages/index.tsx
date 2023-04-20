@@ -68,20 +68,20 @@ export default function Home() {
             onClick={() => handleChooseRole("employer")}
             className={classnames(
               role === "employer" ? "outline outline-primary" : "",
-              "border shadow-md p-24 rounded cursor-pointer hover:outline hover:outline-primary transition-all"
+              "border shadow-md py-24 px-32 rounded cursor-pointer hover:outline hover:outline-primary transition-all"
             )}
           >
-            <h2> Eu sou empresa e quero contratar </h2>
+            <h2> Quero contratar </h2>
           </li>
 
           <li
             onClick={() => handleChooseRole("candidate")}
             className={classnames(
               role === "candidate" ? "outline outline-zinc-600" : "",
-              "border shadow-md p-24 rounded cursor-pointer hover:outline hover:outline-primary transition-all"
+              "border shadow-md py-24 px-32 rounded cursor-pointer hover:outline hover:outline-primary transition-all"
             )}
           >
-            <h2> Eu sou candidato e quero emprego </h2>
+            <h2> Quero emprego </h2>
           </li>
         </div>
       )}
