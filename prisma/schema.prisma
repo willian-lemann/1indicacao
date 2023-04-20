@@ -15,8 +15,11 @@ model User {
   userId      String  @unique
   role        String
   jobs        Job[]
-  description String?
+  description String? @db.Text
   position    String?
+  instagram   String?
+  phone       String?
+  avatar      String?
 
   @@map("users")
 }

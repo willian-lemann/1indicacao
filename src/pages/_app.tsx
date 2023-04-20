@@ -8,6 +8,9 @@ import {
   RedirectToSignIn,
   SignedIn,
   SignedOut,
+  useClerk,
+  useMagicLink,
+  useSignIn,
 } from "@clerk/nextjs";
 import { api } from "@/utils/api";
 import { useRouter } from "next/router";
@@ -27,7 +30,31 @@ const App = ({ Component, pageProps }: AppProps) => {
         socialButtonsBlockButton: "Continue com google",
         formFieldLabel__emailAddress: "Email",
         dividerText: "ou",
+
+        footerActionLink__useAnotherMethod: "Usar outra forma de acesso",
+        backButton: "Voltar",
+
         signIn: {
+          emailCode: {
+            title: "Cheque seu e-mail",
+            subtitle: "Um código de verificação foi enviado pro seu e-mail",
+            resendButton: "Re-enviar código",
+            formSubtitle: "Digite o código",
+            formTitle: "Código de Verificação",
+          },
+
+          alternativeMethods: {
+            title: "Usar outro método",
+            actionLink: "Ajuda?",
+            blockButton__emailCode: "Enviar código para o seu e-mail",
+            getHelp: {
+              title: "Ajuda",
+              blockButton__emailSupport: "Email suporte",
+              content:
+                "Se você está tendo dificuldades para entrar em sua conta, envie-nos um e-mail e trabalharemos com você para restaurar o acesso o mais rápido possível.",
+            },
+          },
+
           start: {
             title: "Faça login",
             subtitle: "para entrar no lokadin",

@@ -5,7 +5,7 @@ export function Status({ active }: StatusProps) {
     return (
       <div className="flex items-center gap-2">
         <div className="h-3 w-3 bg-green-600 rounded-full" />
-        <span className="text-green-600">Ativo</span>
+        <span className="text-green-600">Ativa</span>
       </div>
     );
   }

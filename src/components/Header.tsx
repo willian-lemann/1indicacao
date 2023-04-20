@@ -27,27 +27,14 @@ export function Header() {
           )}
         </Tab.List>
 
-        <Popover className="relative">
-          <Popover.Button>
-            <div className="relative h-10 w-10 rounded-full">
-              <Image
-                src="https://avatars.githubusercontent.com/u/44612750?v=4"
-                alt="imagem de perfil"
-                className="object-cover rounded-full"
-                fill
-              />
-            </div>
-          </Popover.Button>
-
-          <Popover.Panel className="absolute z-[9999] shadow-lg rounded bg-white h-10 w-20 flex flex-col justify-center">
-            <button
-              className="hover:text-red-800 w-full px-4 py-2 text-primary"
-              onClick={() => signOut()}
-            >
-              Sair
-            </button>
-          </Popover.Panel>
-        </Popover>
+        <div>
+          <button
+            className="hover:bg-primary/80 hover:text-white w-full px-4 py-1 text-primary rounded transition-colors"
+            onClick={() => signOut()}
+          >
+            Sair
+          </button>
+        </div>
       </div>
     </header>
   );

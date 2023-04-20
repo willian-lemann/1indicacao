@@ -29,7 +29,7 @@ export default function CustomSwitch({
     <Switch
       checked={enabled}
       onChange={handleChangeStatus}
-      className={`${enabled ? "bg-primary" : "bg-primary/50"}
+      className={`${enabled ? "bg-green-600" : "bg-primary"}
           relative inline-flex h-[24px] w-[44px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
     >
       <span

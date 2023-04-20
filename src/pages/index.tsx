@@ -118,26 +118,38 @@ export const getServerSideProps: GetServerSideProps = async (
 ) => {
   const api = getSSRAppRouter(context);
 
-  const user = await api.users.byUserId();
+  try {
+    const user = await api.users.byUserId();
 
-  if (user?.role === "employer") {
-    return {
-      redirect: {
-        permanent: false,
-        destination: "/empresa",
-      },
-      props: {},
-    };
-  }
+    if (user?.role === "employer") {
+      return {
+        redirect: {
+          permanent: false,
+          destination: "/empresa",
+        },
+        props: {},
+      };
+    }
 
-  if (user?.role === "candidate") {
-    return {
-      redirect: {
-        permanent: false,
-        destination: "/candidato",
-      },
-      props: {},
-    };
+    if (user?.role === "candidate") {
+      return {
+        redirect: {
+          permanent: false,
+          destination: "/candidato",
+        },
+        props: {},
+      };
+    }
+  } catch (error: any) {
+    if (error.code === "UNAUTHORIZED") {
+      return {
+        redirect: {
+          permanent: false,
+          destination: "/sign-in",
+        },
+        props: {},
+      };
+    }
   }
 
   return {

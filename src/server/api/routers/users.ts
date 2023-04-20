@@ -2,6 +2,16 @@ import { z } from "zod";
 
 import { createTRPCRouter, privateProcedure } from "@/server/api/trpc";
 
+const updateUserSchema = z.object({
+  name: z.string().optional(),
+  description: z.string().optional(),
+  position: z.string().optional(),
+  instagram: z.string().optional(),
+  phone: z.string().optional(),
+});
+
+export type UpdateUserSchemaData = z.infer<typeof updateUserSchema>;
+
 export const usersRouter = createTRPCRouter({
   create: privateProcedure
     .input(z.object({ role: z.string(), name: z.string() }))
@@ -18,14 +28,8 @@ export const usersRouter = createTRPCRouter({
     }),
 
   update: privateProcedure
-    .input(
-      z.object({
-        name: z.string().optional(),
-        description: z.string().optional(),
-      })
-    )
+    .input(updateUserSchema)
     .mutation(async ({ input, ctx }) => {
-      console.log(input);
       const userCreated = await ctx.prisma.user.update({
         where: {
           userId: ctx.currentUser,
@@ -44,5 +48,13 @@ export const usersRouter = createTRPCRouter({
     });
 
     return user;
+  }),
+
+  getAllCandidates: privateProcedure.query(async ({ ctx }) => {
+    const candidates = await ctx.prisma.user.findMany({
+      where: { role: "candidate" },
+    });
+
+    return candidates;
   }),
 });

@@ -1,15 +1,23 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useAuth } from "@/features/authentication/hooks/use-auth";
 import Image from "next/image";
-import { flushSync } from "react-dom";
 
 import { api } from "@/utils/api";
 import { addSuccessNotification } from "../Alert";
+import { UpdateUserSchemaData } from "@/server/api/routers/users";
 
 export function Profile() {
   const { user, isCandidate } = useAuth();
-  const { register, handleSubmit, setValue, watch } = useForm();
+  const { register, handleSubmit } = useForm<UpdateUserSchemaData>({
+    values: {
+      name: user?.name as string,
+      position: user?.position as string,
+      description: user?.description as string,
+      instagram: user?.instagram as string,
+      phone: user?.phone as string,
+    },
+  });
 
   const { mutateAsync } = api.users.update.useMutation();
 
@@ -24,55 +32,62 @@ export function Profile() {
       : "Caso você prefira escrever uma breve descrição sobre sua empresa"
   }`;
 
-  useEffect(() => {
-    if (user) {
-      console.log(user.name);
-      setValue("name", user.name);
-      setValue("description", user.description);
-    }
-  }, [setValue, user]);
-
   return (
     <div className="container max-w-2xl">
       <form className="flex flex-col" onSubmit={onSubmit}>
-        <div className="mt-10 flex items-center">
-          <div className="relative h-24 w-24 rounded-full">
-            <Image
-              src="https://avatars.githubusercontent.com/u/44612750?v=4"
-              alt="imagem de perfil"
-              fill
-              className="object-cover rounded-full"
-            />
-          </div>
-
-          <div className="pl-4 flex items-center group">
-            <p className="text-xl font-semibold cursor-pointer">
-              {watch("name")}
-            </p>
-          </div>
+        <div className="mt-10 flex justify-end">
+          <button className="px-4 py-2 bg-primary  text-white rounded cursor-pointer gap-2">
+            <span>Salvar</span>
+          </button>
         </div>
 
-        <div className="mt-4">
-          <h2 className="text-primary/70">Nome</h2>
-          <input
-            type="text"
-            placeholder="nome"
-            className="px-4 py-2 outline-none border border-primary rounded mt-2"
-            {...register("name")}
-          />
-        </div>
-
-        {isCandidate ? (
+        <div className="flex items-center w-full justify-between">
           <div className="mt-4">
-            <h2 className="text-primary/70">Seu cargo</h2>
+            <h2 className="text-primary/70">
+              {isCandidate ? "Nome" : "Nome da empresa"}
+            </h2>
             <input
               type="text"
-              placeholder="seu cargo"
+              placeholder="nome"
               className="px-4 py-2 outline-none border border-primary rounded mt-2"
-              {...register("position")}
+              {...register("name")}
             />
           </div>
-        ) : null}
+
+          {isCandidate ? (
+            <div className="mt-4">
+              <h2 className="text-primary/70">Seu cargo</h2>
+              <input
+                type="text"
+                placeholder="seu cargo"
+                className="px-4 py-2 outline-none border border-primary rounded mt-2"
+                {...register("position")}
+              />
+            </div>
+          ) : null}
+        </div>
+
+        <div className="flex items-center w-full justify-between">
+          <div className="mt-4">
+            <h2 className="text-primary/70">Whatsapp (opcional)</h2>
+            <input
+              type="text"
+              placeholder="whatsapp"
+              className="px-4 py-2 outline-none border border-primary rounded mt-2"
+              {...register("phone")}
+            />
+          </div>
+
+          <div className="mt-4 w-full  ml-4 ">
+            <h2 className="text-primary/70">Instagram (opcional)</h2>
+            <input
+              type="text"
+              placeholder="link do instagram"
+              className="px-4 py-2 outline-none w-full border border-primary rounded mt-2"
+              {...register("instagram")}
+            />
+          </div>
+        </div>
 
         <div className="mt-4 w-full">
           <h2 className="text-primary/70">
@@ -83,15 +98,11 @@ export function Profile() {
 
           <textarea
             id="description"
-            className="border  border-primary w-full h-48 p-4 rounded mt-2"
+            className="border  border-primary w-full h-[300px] p-4 rounded mt-2"
             placeholder={placeholder}
             {...register("description")}
           />
         </div>
-
-        <button className="px-4 py-2 mt-2  bg-primary  text-white rounded cursor-pointer self-end gap-2">
-          <span>Salvar</span>
-        </button>
       </form>
     </div>
   );
