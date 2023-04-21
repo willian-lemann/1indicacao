@@ -3,14 +3,13 @@ export { reportWebVitals } from "next-axiom";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 
+import { Analytics } from "@vercel/analytics/react";
+
 import {
   ClerkProvider,
   RedirectToSignIn,
   SignedIn,
   SignedOut,
-  useClerk,
-  useMagicLink,
-  useSignIn,
 } from "@clerk/nextjs";
 import { api } from "@/utils/api";
 import { useRouter } from "next/router";
@@ -72,7 +71,6 @@ const App = ({ Component, pageProps }: AppProps) => {
         },
       }}
     >
-      <AlertProvider />
       {isPublicPage ? (
         <Component {...pageProps} />
       ) : (
@@ -85,6 +83,8 @@ const App = ({ Component, pageProps }: AppProps) => {
           </SignedOut>
         </>
       )}
+      <AlertProvider />
+      <Analytics />
     </ClerkProvider>
   );
 };

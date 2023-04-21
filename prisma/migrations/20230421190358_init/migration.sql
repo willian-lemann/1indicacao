@@ -21,6 +21,7 @@ CREATE TABLE `jobs` (
     `positions` INTEGER NOT NULL,
     `salary` VARCHAR(191) NOT NULL,
     `position` VARCHAR(191) NOT NULL,
+    `description` TEXT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `userId` VARCHAR(191) NULL,
 

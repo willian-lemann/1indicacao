@@ -6,6 +6,7 @@ import Image from "next/image";
 import { api } from "@/utils/api";
 import { addSuccessNotification } from "../Alert";
 import { UpdateUserSchemaData } from "@/server/api/routers/users";
+import { ExcludeAccount } from "../ExcludeAccount";
 
 export function Profile() {
   const { user, isCandidate } = useAuth();
@@ -104,6 +105,10 @@ export function Profile() {
           />
         </div>
       </form>
+
+      {/* <div className="my-10 flex items-center justify-center w-full">
+        <ExcludeAccount />
+      </div> */}
     </div>
   );
 }

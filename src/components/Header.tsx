@@ -1,8 +1,10 @@
 import Image from "next/image";
-import { Tab } from "@headlessui/react";
+import { Popover, Tab } from "@headlessui/react";
+import { Cog8ToothIcon } from "@heroicons/react/24/solid";
 
 import { useAuth } from "@/features/authentication/hooks/use-auth";
 import { classnames } from "@/utils/classnames";
+import { ExcludeAccount } from "./ExcludeAccount";
 
 export function Header() {
   const { user, signOut } = useAuth();
