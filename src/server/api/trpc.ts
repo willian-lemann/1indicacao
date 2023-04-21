@@ -17,6 +17,7 @@
 import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
 
 import { prisma } from "@/server/db";
+import { rateLimit } from "@/utils/rate-limit";
 
 type CreateContextOptions = Record<string, never>;
 /**
@@ -92,7 +93,13 @@ const enforceUserIsAuthenticated = t.middleware(async ({ ctx, next }) => {
     });
   }
 
-  console.log(ctx.currentUser);
+  const { success } = await rateLimit.limit(String(ctx.currentUser));
+
+  if (!success) {
+    throw new TRPCError({
+      code: "TOO_MANY_REQUESTS",
+    });
+  }
 
   return next({
     ctx: {
