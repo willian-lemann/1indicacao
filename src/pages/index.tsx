@@ -95,7 +95,8 @@ export default function Home() {
             "px-4 py-2 rounded text-white hover:brightness-95 transition-all"
           )}
         >
-          {isLoading ? <Loading /> : "Entrar"}
+          <span className="pr-2">Entrar</span>
+          {isLoading ? <Loading /> : null}
         </button>
       ) : (
         <button

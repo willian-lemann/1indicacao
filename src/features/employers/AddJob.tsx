@@ -1,20 +1,45 @@
 import { addSuccessNotification } from "@/components/Alert";
 import { CreateJobSchemaData } from "@/server/api/routers/jobs";
 import { api } from "@/utils/api";
+import { uniqueId } from "@/utils/uniqueId";
 import { Dialog, Transition } from "@headlessui/react";
+import { useRouter } from "next/router";
 import { Fragment, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useAuth } from "../authentication/hooks/use-auth";
+
+import { useJobs } from "./hooks/use-jobs";
 
 export default function AddJob() {
+  const router = useRouter();
+  const { user } = useAuth();
+  const { addNewJob } = useJobs();
+
   const [isOpen, setIsOpen] = useState(false);
   const { register, handleSubmit } = useForm<CreateJobSchemaData>();
 
   const { mutateAsync } = api.jobs.create.useMutation();
 
   const onSubmit = handleSubmit(async (data) => {
-    await mutateAsync({ ...data, positions: String(data.positions) });
+    const newJob = { ...data, positions: String(data.positions) };
+
+    await mutateAsync(newJob);
+
     addSuccessNotification("Vaga salva!");
+
     setIsOpen(false);
+
+    addNewJob({
+      user: { name: user.name as string },
+      id: uniqueId,
+      createdAt: new Date(),
+      isActive: true,
+      position: newJob.position,
+      positions: Number(newJob.positions),
+      salary: newJob.salary,
+    });
+
+    router.reload();
   });
 
   function closeModal() {
@@ -89,11 +114,20 @@ export default function AddJob() {
                       </div>
 
                       <div>
-                        <h2 className="opacity-70">Descrição da vaga</h2>
+                        <h2 className="opacity-70">Cargo ou função</h2>
                         <textarea
                           className="px-4 py-2 outline-none border border-primary rounded border-opacity-50 mb-4 w-full"
                           placeholder="Descrição da vaga"
                           {...register("position")}
+                        />
+                      </div>
+
+                      <div>
+                        <h2 className="opacity-70">Descrição da vaga</h2>
+                        <textarea
+                          className="px-4 py-2 outline-none border h-40 border-primary rounded border-opacity-50 mb-4 w-full"
+                          placeholder="Descrição da vaga"
+                          {...register("description")}
                         />
                       </div>
                     </div>

@@ -1,12 +1,13 @@
 import EditJob from "../EditJob";
-import { useMyJobs } from "../hooks/use-my-jobs";
+import { useJobs } from "../hooks/use-jobs";
 import CustomSwitch from "../Switch";
 
 import { dayjs } from "@/lib/dayjs";
 import { Status } from "./Status";
+import DeleteJob from "../DeleteJob";
 
 export function EmployersJobList() {
-  const { jobs, isEmpty } = useMyJobs();
+  const { jobs, isEmpty } = useJobs();
 
   return (
     <ul>
@@ -18,11 +19,11 @@ export function EmployersJobList() {
       {jobs.map((jobItem) => (
         <li
           key={jobItem.id}
-          className="grid grid-cols-7 border p-6 rounded text-primary/90 mb-4 last:mb-0"
+          className="grid grid-cols-8 border p-6 rounded text-primary/90 mb-4 last:mb-0"
         >
           <p className="flex items-center">{jobItem.user?.name}</p>
           <p className="flex items-center pl-4">{jobItem.positions}</p>
-          <p className="flex items-center">{jobItem.salary}</p>
+          <p className="flex items-center truncate">{jobItem.salary}</p>
           <p className="flex items-center">
             <Status active={jobItem.isActive} />
           </p>
@@ -35,6 +36,8 @@ export function EmployersJobList() {
           </div>
 
           <EditJob id={jobItem.id} />
+
+          <DeleteJob id={jobItem.id} />
         </li>
       ))}
     </ul>

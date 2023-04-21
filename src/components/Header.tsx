@@ -1,8 +1,8 @@
 import Image from "next/image";
-import { Tab, Popover } from "@headlessui/react";
-import { SignOutButton } from "@clerk/nextjs";
+import { Tab } from "@headlessui/react";
 
 import { useAuth } from "@/features/authentication/hooks/use-auth";
+import { classnames } from "@/utils/classnames";
 
 export function Header() {
   const { user, signOut } = useAuth();
@@ -15,14 +15,59 @@ export function Header() {
         </div>
 
         <Tab.List className="space-x-4 flex items-center">
-          <Tab className="outline-none">Meu Perfil</Tab>
+          <Tab className="outline-none">
+            {({ selected }) => (
+              <button
+                className={classnames(
+                  selected ? "border-b-2 border-primary" : "",
+                  "py-1"
+                )}
+              >
+                Meu perfil
+              </button>
+            )}
+          </Tab>
 
           {user?.role === "candidate" ? (
-            <Tab className="outline-none">Vagas</Tab>
+            <Tab className="outline-none">
+              {({ selected }) => (
+                <button
+                  className={classnames(
+                    selected ? "border-b-2 border-primary" : "",
+                    "py-1"
+                  )}
+                >
+                  Vagas
+                </button>
+              )}
+            </Tab>
           ) : (
             <>
-              <Tab className="outline-none">Candidatos</Tab>
-              <Tab className="outline-none">Minhas Vagas</Tab>
+              <Tab className="outline-none">
+                {({ selected }) => (
+                  <button
+                    className={classnames(
+                      selected ? "border-b-2 border-primary" : "",
+                      "py-1"
+                    )}
+                  >
+                    Candidatos
+                  </button>
+                )}
+              </Tab>
+
+              <Tab className="outline-none">
+                {({ selected }) => (
+                  <button
+                    className={classnames(
+                      selected ? "border-b-2 border-primary" : "",
+                      "py-1"
+                    )}
+                  >
+                    Minhas Vagas
+                  </button>
+                )}
+              </Tab>
             </>
           )}
         </Tab.List>

@@ -4,8 +4,11 @@ CREATE TABLE `users` (
     `name` VARCHAR(191) NULL,
     `userId` VARCHAR(191) NOT NULL,
     `role` VARCHAR(191) NOT NULL,
-    `description` VARCHAR(191) NULL,
+    `description` TEXT NULL,
     `position` VARCHAR(191) NULL,
+    `instagram` VARCHAR(191) NULL,
+    `phone` VARCHAR(191) NULL,
+    `avatar` VARCHAR(191) NULL,
 
     UNIQUE INDEX `users_id_key`(`id`),
     UNIQUE INDEX `users_userId_key`(`userId`)
@@ -22,5 +25,5 @@ CREATE TABLE `jobs` (
     `userId` VARCHAR(191) NULL,
 
     UNIQUE INDEX `jobs_id_key`(`id`),
-    UNIQUE INDEX `jobs_userId_key`(`userId`)
+    INDEX `jobs_userId_idx`(`userId`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

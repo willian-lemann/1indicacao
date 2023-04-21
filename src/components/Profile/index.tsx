@@ -11,11 +11,11 @@ export function Profile() {
   const { user, isCandidate } = useAuth();
   const { register, handleSubmit } = useForm<UpdateUserSchemaData>({
     values: {
-      name: user?.name as string,
-      position: user?.position as string,
-      description: user?.description as string,
-      instagram: user?.instagram as string,
-      phone: user?.phone as string,
+      name: user?.name || "",
+      position: user?.position || "",
+      description: user?.description || "",
+      instagram: user?.instagram || "",
+      phone: user?.phone || "",
     },
   });
 

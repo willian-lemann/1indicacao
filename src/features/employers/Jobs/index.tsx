@@ -1,18 +1,15 @@
 import { useAuth } from "@/features/authentication/hooks/use-auth";
-import { useMyJobs } from "@/features/employers/hooks/use-my-jobs";
 
-import { dayjs } from "@/lib/dayjs";
 import AddJob from "@/features/employers/AddJob";
-import { Switch } from "@headlessui/react";
-import { useState } from "react";
-import CustomSwitch from "@/features/employers/Switch";
-import EditJob from "@/features/employers/EditJob";
+
 import { EmployersJobList } from "./EmployersJobList";
 import { CandidatesJobList } from "./CandidatesJobList";
 import { classnames } from "@/utils/classnames";
+import { useFetchJobs } from "../hooks/use-fetch-jobs";
 
 export function Jobs() {
   const { isEmployer } = useAuth();
+  useFetchJobs();
 
   return (
     <div className="container py-4 z-0">
@@ -27,8 +24,8 @@ export function Jobs() {
       <div
         className={classnames(
           isEmployer
-            ? "grid-cols-[1fr,1fr,1fr,1fr,1fr,1fr,1fr]"
-            : "grid-cols-[1fr,1fr,1fr,1fr,1fr]",
+            ? "grid-cols-[1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr]"
+            : "grid-cols-[1fr,1fr,1fr,1fr,1fr,1fr]",
           "mt-4 grid text-primary font-semibold p-6"
         )}
       >

@@ -1,15 +1,18 @@
 import { Header } from "@/components/Header";
 import { Profile } from "@/components/Profile";
 import { Candidates } from "@/features/candidates/Candidates";
+import { useFetchCandidates } from "@/features/candidates/hooks/use-fetch-candidates";
 import { Jobs } from "@/features/employers/Jobs";
 import { getSSRAppRouter } from "@/server/api/root";
 import { Tab } from "@headlessui/react";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 
 export default function Employer() {
+  useFetchCandidates();
+
   return (
     <div>
-      <Tab.Group>
+      <Tab.Group defaultIndex={1}>
         <Header />
         <Tab.Panels>
           <Tab.Panel>

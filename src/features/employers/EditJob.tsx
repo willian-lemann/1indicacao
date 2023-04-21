@@ -5,18 +5,32 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useJob } from "./hooks/use-job";
+import { useJobs } from "./hooks/use-jobs";
 
 type EditJobProps = { id: string };
 
 export default function EditJob({ id }: EditJobProps) {
-  const [isOpen, setIsOpen] = useState(false);
-  const { register, handleSubmit, setValue } = useForm<UpdateJobSchemaData>();
   const { job } = useJob({ id });
+  const [isOpen, setIsOpen] = useState(false);
+  const { register, handleSubmit } = useForm<UpdateJobSchemaData>({
+    values: {
+      id,
+      position: job?.position || "",
+      positions: job?.positions || 0,
+      salary: job?.salary || "",
+      description: job?.description || "",
+    },
+  });
+  const { updateJob } = useJobs();
 
   const { mutateAsync } = api.jobs.update.useMutation();
 
   const onSubmit = handleSubmit(async (data) => {
-    await mutateAsync({ ...data, positions: String(data.positions), id });
+    const updateData = { ...data, positions: String(data.positions), id };
+
+    updateJob(id, data);
+
+    await mutateAsync(updateData);
     addSuccessNotification("Vaga alterada com sucesso!");
     setIsOpen(false);
   });
@@ -29,13 +43,6 @@ export default function EditJob({ id }: EditJobProps) {
     setIsOpen(true);
   }
 
-  useEffect(() => {
-    if (job) {
-      setValue("position", job.position);
-      setValue("salary", job.salary);
-      setValue("positions", job.positions);
-    }
-  }, [job, setValue]);
   return (
     <>
       <button onClick={openModal} className="text-primary px-4 py-2 rounded">
@@ -97,11 +104,20 @@ export default function EditJob({ id }: EditJobProps) {
                       </div>
 
                       <div>
-                        <h2 className="opacity-70">Descrição da vaga</h2>
+                        <h2 className="opacity-70">Cargo ou função</h2>
                         <textarea
                           className="px-4 py-2 outline-none border border-primary rounded border-opacity-50 mb-4 w-full"
                           placeholder="Descrição da vaga"
                           {...register("position")}
+                        />
+                      </div>
+
+                      <div>
+                        <h2 className="opacity-70">Descrição da vaga</h2>
+                        <textarea
+                          className="px-4 py-2 outline-none border h-40 border-primary rounded border-opacity-50 mb-4 w-full"
+                          placeholder="Descrição da vaga"
+                          {...register("description")}
                         />
                       </div>
                     </div>

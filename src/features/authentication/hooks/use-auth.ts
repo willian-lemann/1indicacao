@@ -1,6 +1,7 @@
 import { api } from "@/utils/api";
 import { useClerk, useUser } from "@clerk/nextjs";
 import { useEffect } from "react";
+import { User } from "../types/user";
 
 export function useAuth() {
   const { isSignedIn, user } = useUser();
@@ -13,7 +14,18 @@ export function useAuth() {
   const currentUser = {
     ...data,
     avatar: user?.profileImageUrl,
-  };
+  } as User;
+
+  function validateIfUserHasFullProfile(user: User) {
+    let hasFullProfile = false;
+    if (user.phone && user.position && user.description) {
+      hasFullProfile = true;
+    }
+
+    return hasFullProfile;
+  }
+
+  const hasFullProfile = validateIfUserHasFullProfile(currentUser);
 
   return {
     isSignedIn,
@@ -21,5 +33,6 @@ export function useAuth() {
     signOut,
     isCandidate,
     isEmployer,
+    hasFullProfile,
   };
 }
