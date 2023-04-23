@@ -93,14 +93,6 @@ const enforceUserIsAuthenticated = t.middleware(async ({ ctx, next }) => {
     });
   }
 
-  const { success } = await rateLimit.limit(String(ctx.currentUser));
-
-  if (!success) {
-    throw new TRPCError({
-      code: "TOO_MANY_REQUESTS",
-    });
-  }
-
   return next({
     ctx: {
       currentUser: ctx.currentUser,

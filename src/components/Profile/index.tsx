@@ -1,12 +1,9 @@
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useAuth } from "@/features/authentication/hooks/use-auth";
-import Image from "next/image";
 
 import { api } from "@/utils/api";
 import { addSuccessNotification } from "../Alert";
 import { UpdateUserSchemaData } from "@/server/api/routers/users";
-import { ExcludeAccount } from "../ExcludeAccount";
 
 export function Profile() {
   const { user, isCandidate } = useAuth();
@@ -42,8 +39,8 @@ export function Profile() {
           </button>
         </div>
 
-        <div className="flex items-center w-full justify-between">
-          <div className="mt-4">
+        <div className="flex flex-col md:flex-row items-center w-full justify-between">
+          <div className="mt-4 w-full md:w-auto">
             <h2 className="text-primary/70">
               {isCandidate ? "Nome" : "Nome da empresa"}
             </h2>
@@ -68,8 +65,8 @@ export function Profile() {
           ) : null}
         </div>
 
-        <div className="flex items-center w-full justify-between">
-          <div className="mt-4">
+        <div className="flex flex-col md:flex-row items-center w-full justify-between">
+          <div className="mt-4 w-full md:w-auto">
             <h2 className="text-primary/70">Whatsapp (opcional)</h2>
             <input
               type="text"
@@ -79,7 +76,7 @@ export function Profile() {
             />
           </div>
 
-          <div className="mt-4 w-full  ml-4 ">
+          <div className="mt-4 w-full md:ml-4">
             <h2 className="text-primary/70">Instagram (opcional)</h2>
             <input
               type="text"

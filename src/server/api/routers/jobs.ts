@@ -5,6 +5,8 @@ import {
   privateProcedure,
   publicProcedure,
 } from "@/server/api/trpc";
+import { rateLimit } from "@/utils/rate-limit";
+import { TRPCError } from "@trpc/server";
 
 const createJobSchema = z.object({
   positions: z.string().transform((value) => +value),
@@ -71,6 +73,14 @@ export const jobsRouter = createTRPCRouter({
     .input(createJobSchema)
     .mutation(async ({ ctx, input }) => {
       const { positions, salary, position, description } = input;
+
+      const { success } = await rateLimit.limit(String(ctx.currentUser));
+
+      if (!success) {
+        throw new TRPCError({
+          code: "TOO_MANY_REQUESTS",
+        });
+      }
 
       const createdJob = await ctx.prisma.job.create({
         data: {

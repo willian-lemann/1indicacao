@@ -1,5 +1,6 @@
 import { Loading } from "@/components/Loading";
 import { useAuth } from "@/features/authentication/hooks/use-auth";
+import { Location } from "@/features/authentication/types/location";
 import { getSSRAppRouter } from "@/server/api/root";
 import { api } from "@/utils/api";
 import { classnames } from "@/utils/classnames";
@@ -8,13 +9,15 @@ import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import { FormEvent, useState } from "react";
 
-export default function Home() {
+type HomeProps = { locations: Location[] };
+
+export default function Home({ locations }: HomeProps) {
   const { mutateAsync, isLoading } = api.users.create.useMutation();
 
-  const { user } = useAuth();
   const router = useRouter();
   const [role, setRole] = useState("");
   const [name, setName] = useState("");
+  const [locationId, setLocationId] = useState("");
   const [nextStep, setNextStep] = useState(false);
 
   function handleChooseRole(role: string) {
@@ -28,7 +31,7 @@ export default function Home() {
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
 
-    await mutateAsync({ role, name });
+    await mutateAsync({ role, name, locationId });
 
     if (role === "candidate") {
       router.push("/candidato");
@@ -43,24 +46,41 @@ export default function Home() {
     }
 
     if (role === "employer") {
-      return "Qual o nome da empresa?";
+      return "Qual o nome da empresa e região que você mora?";
     }
 
-    return "Qual seu nome?";
+    return "Qual seu nome e região que você mora?";
   }
 
   return (
     <main className="flex min-h-screen flex-col gap-10 items-center justify-center list-none">
       <h1 className="text-lg">{getLabel(nextStep, role)}</h1>
       {nextStep ? (
-        <div>
-          <input
-            type="text"
-            placeholder="seu nome"
-            className="px-4 py-2 outline-none border rounded"
-            value={name}
-            onChange={({ target }) => setName(target.value)}
-          />
+        <div className="space-y-4">
+          <div>
+            <input
+              type="text"
+              placeholder="seu nome"
+              className="px-4 py-2 outline-none border rounded"
+              value={name}
+              onChange={({ target }) => setName(target.value)}
+            />
+          </div>
+
+          <div>
+            <select
+              name="state"
+              id="state"
+              className="cursor-pointer p-2 outline-none"
+              onChange={({ target }) => setLocationId(target.value)}
+            >
+              {locations.map((location) => (
+                <option key={location.id} value={location.id}>
+                  {location.name}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
       ) : (
         <div className="flex items-center gap-4 text-zinc-700">
@@ -153,7 +173,11 @@ export const getServerSideProps: GetServerSideProps = async (
     }
   }
 
+  const locations = await api.locations.getAll();
+
   return {
-    props: {},
+    props: {
+      locations,
+    },
   };
 };

@@ -56,7 +56,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 
           start: {
             title: "Faça login",
-            subtitle: "para entrar no lokadin",
+            subtitle: "para entrar no 1indicação",
             actionText: "Não tem uma conta?",
             actionLink: "Cadastrar-se",
           },
@@ -64,7 +64,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         signUp: {
           start: {
             title: "Crie uma conta",
-            subtitle: "para entrar no lokadin",
+            subtitle: "para entrar no 1indicação",
             actionText: "Já tem uma conta?",
             actionLink: "Fazer Login",
           },
