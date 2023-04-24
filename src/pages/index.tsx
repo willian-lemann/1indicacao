@@ -107,7 +107,7 @@ export default function Home({ locations }: HomeProps) {
           onClick={handleSubmit}
           className={classnames(
             role ? "bg-primary" : "bg-indigo-600/20",
-            "px-4 py-2 rounded text-white hover:brightness-95 transition-all"
+            "px-4 py-2 rounded text-white hover:brightness-95 transition-all flex items-center"
           )}
         >
           <span className="pr-2">Entrar</span>
