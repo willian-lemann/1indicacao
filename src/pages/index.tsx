@@ -55,7 +55,7 @@ export default function Home({ locations }: HomeProps) {
 
   return (
     <main className="flex min-h-screen flex-col gap-10 items-center justify-center list-none">
-      <h1 className="text-lg">{getLabel(nextStep, role)}</h1>
+      <h1 className="text-lg px-8">{getLabel(nextStep, role)}</h1>
       {nextStep ? (
         <div className="space-y-4 relative">
           <div>
