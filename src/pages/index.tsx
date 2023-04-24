@@ -111,6 +111,7 @@ export default function Home({ locations }: HomeProps) {
           )}
         >
           <span className="pr-2">Entrar</span>
+
           {isLoading ? <Loading /> : null}
         </button>
       ) : (
