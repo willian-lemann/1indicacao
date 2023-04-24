@@ -64,6 +64,7 @@ export const usersRouter = createTRPCRouter({
     }),
 
   byUserId: privateProcedure.query(async ({ ctx }) => {
+    console.log("ctxxxxxxxxxx", ctx.currentUser);
     const user = await ctx.prisma.user.findUnique({
       where: { userId: ctx.currentUser },
     });

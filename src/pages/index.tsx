@@ -8,6 +8,7 @@ import { getAuth } from "@clerk/nextjs/server";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import { FormEvent, useState } from "react";
+import ReactSelect from "react-select";
 
 type HomeProps = { locations: Location[] };
 
@@ -56,7 +57,7 @@ export default function Home({ locations }: HomeProps) {
     <main className="flex min-h-screen flex-col gap-10 items-center justify-center list-none">
       <h1 className="text-lg">{getLabel(nextStep, role)}</h1>
       {nextStep ? (
-        <div className="space-y-4">
+        <div className="space-y-4 relative">
           <div>
             <input
               type="text"
@@ -67,28 +68,22 @@ export default function Home({ locations }: HomeProps) {
             />
           </div>
 
-          <div>
-            <select
-              name="state"
-              id="state"
-              className="cursor-pointer p-2 outline-none"
-              onChange={({ target }) => setLocationId(target.value)}
-            >
-              {locations.map((location) => (
-                <option key={location.id} value={location.id}>
-                  {location.name}
-                </option>
-              ))}
-            </select>
-          </div>
+          <ReactSelect
+            options={locations.map((location) => ({
+              value: location.id,
+              label: location.name,
+            }))}
+            placeholder="Selecione uma região"
+            onChange={(option) => setLocationId(String(option?.value))}
+          />
         </div>
       ) : (
-        <div className="flex items-center gap-4 text-zinc-700">
+        <div className="flex flex-col md:flex-row px-8 w-full md:w-auto md:px-0 items-center gap-4 text-zinc-700 ">
           <li
             onClick={() => handleChooseRole("employer")}
             className={classnames(
               role === "employer" ? "outline outline-primary" : "",
-              "border shadow-md py-24 px-32 rounded cursor-pointer hover:outline hover:outline-primary transition-all"
+              "border shadow-md py-24 md:px-32 w-full md:w-auto flex justify-center md:inline-block  rounded cursor-pointer hover:outline hover:outline-primary transition-all"
             )}
           >
             <h2> Quero contratar </h2>
@@ -98,7 +93,7 @@ export default function Home({ locations }: HomeProps) {
             onClick={() => handleChooseRole("candidate")}
             className={classnames(
               role === "candidate" ? "outline outline-zinc-600" : "",
-              "border shadow-md py-24 px-32 rounded cursor-pointer hover:outline hover:outline-primary transition-all"
+              "border shadow-md py-24 md:px-32 w-full md:w-auto flex justify-center md:inline-block rounded cursor-pointer hover:outline hover:outline-primary transition-all"
             )}
           >
             <h2> Quero emprego </h2>

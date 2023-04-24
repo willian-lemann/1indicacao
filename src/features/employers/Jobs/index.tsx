@@ -12,9 +12,9 @@ export function Jobs() {
   useFetchJobs();
 
   return (
-    <div className="container py-4 z-0">
+    <div className="px-8 md:container py-4 z-0">
       {isEmployer ? (
-        <div className="flex items-center justify-between">
+        <div className="flex mt-4 md:mt-0 items-center justify-between">
           <h1 className="text-lg">Minhas Vagas</h1>
 
           <AddJob />
@@ -26,10 +26,10 @@ export function Jobs() {
           isEmployer
             ? "grid-cols-[1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr]"
             : "grid-cols-[1fr,1fr,1fr,1fr,1fr,1fr]",
-          "mt-4 grid text-primary font-semibold p-6"
+          "mt-4 text-primary font-semibold p-6 hidden md:grid"
         )}
       >
-        <p>Nome</p>
+        {isEmployer ? null : <p>Nome</p>}
         <p className="flex items-center">Nº de Vagas</p>
         <p className="flex items-center">Remuneração</p>
         <p className="flex items-center">Status</p>

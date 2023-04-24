@@ -24,7 +24,10 @@ export function SeeJobDetails({ id }: SeeJobDetailsProps) {
 
   return (
     <>
-      <button onClick={openModal} className="px-4 py-2 rounded text-primary">
+      <button
+        onClick={openModal}
+        className="px-4 py-2 md:rounded rounded-full text-white bg-primary md:bg-transparent md:text-primary"
+      >
         Ver vaga
       </button>
 
@@ -71,6 +74,8 @@ export function SeeJobDetails({ id }: SeeJobDetailsProps) {
                       <h1>{job?.position || ""}</h1>
 
                       <p>{job?.description || ""}</p>
+
+                      <p className="py-4">Salário {job?.salary || ""}</p>
 
                       <div className="mt-4">
                         <strong>Contatos:</strong>

@@ -6,7 +6,6 @@ import { Jobs } from "@/features/employers/Jobs";
 import { getSSRAppRouter } from "@/server/api/root";
 import { Tab } from "@headlessui/react";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
-import { useEffect } from "react";
 
 export default function Candidate() {
   const { hasFullProfile } = useAuth();
@@ -39,6 +38,16 @@ export const getServerSideProps: GetServerSideProps = async (
 
   try {
     const user = await api.users.byUserId();
+
+    if (!user) {
+      return {
+        redirect: {
+          permanent: false,
+          destination: "/",
+        },
+        props: {},
+      };
+    }
 
     if (user?.role === "employer") {
       return {

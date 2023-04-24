@@ -1,22 +1,49 @@
-import Image from "next/image";
-import { Popover, Tab } from "@headlessui/react";
-import { Cog8ToothIcon } from "@heroicons/react/24/solid";
-
 import { useAuth } from "@/features/authentication/hooks/use-auth";
 import { classnames } from "@/utils/classnames";
-import { ExcludeAccount } from "./ExcludeAccount";
+import { Tab } from "@headlessui/react";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
+import Image from "next/image";
+import { useState } from "react";
 
-export function Header() {
+export function MobileHeader() {
   const { user, signOut } = useAuth();
+  const [isOpen, setIsOpen] = useState(false);
+
+  function openMenu() {
+    setIsOpen(true);
+  }
+
+  function closeMenu() {
+    setIsOpen(false);
+  }
 
   return (
-    <header className="shadow-md">
-      <div className="container flex items-center justify-between py-6 ">
-        <div className="relative h-10 w-10">
-          <Image src="/icon.svg" alt="icone" fill />
+    <header className="md:hidden flex shadow-md h-fit">
+      <div className="px-8 flex items-center justify-between py-6">
+        <Bars3Icon className="h-10 w-10" onClick={openMenu} />
+
+        <div className="relative w-10 h-10">
+          <Image src="/icon.svg" alt="logo" fill />
         </div>
 
-        <Tab.List className="space-x-4 flex items-center">
+        <Tab.List
+          onClick={closeMenu}
+          className={classnames(
+            isOpen ? "-translate-x-0" : "-translate-x-full",
+            "transition-all space-y-6 z-50 flex pt-20 flex-col items-start shadow-lg absolute bottom-0 bg-white px-8 w-[230px] py-10 top-0 left-0"
+          )}
+        >
+          <div>
+            <div className="h-10 w-10 absolute top-4">
+              <Image src="/icon.svg" fill alt="logo" />
+            </div>
+
+            <XMarkIcon
+              className="h-8 w-8 absolute  top-4 right-4"
+              onClick={closeMenu}
+            />
+          </div>
+
           <Tab className="outline-none">
             {({ selected }) => (
               <button
@@ -72,16 +99,16 @@ export function Header() {
               </Tab>
             </>
           )}
-        </Tab.List>
 
-        <div>
-          <button
-            className="hover:bg-primary/80 hover:text-white w-full px-4 py-1 text-primary rounded transition-colors"
-            onClick={() => signOut()}
-          >
-            Sair
-          </button>
-        </div>
+          <div>
+            <button
+              className="hover:bg-primary/80 hover:text-white w-full text-primary rounded transition-colors"
+              onClick={() => signOut()}
+            >
+              Sair
+            </button>
+          </div>
+        </Tab.List>
       </div>
     </header>
   );

@@ -33,6 +33,9 @@ const App = ({ Component, pageProps }: AppProps) => {
         footerActionLink__useAnotherMethod: "Usar outra forma de acesso",
         backButton: "Voltar",
 
+        unstable__errors: {
+          form_identifier_not_found: "Não encontramos essa conta.",
+        },
         signIn: {
           emailCode: {
             title: "Cheque seu e-mail",

@@ -14,6 +14,7 @@ export default function Employer() {
     <div>
       <Tab.Group defaultIndex={1}>
         <Header />
+
         <Tab.Panels>
           <Tab.Panel>
             <Profile />
@@ -39,6 +40,16 @@ export const getServerSideProps: GetServerSideProps = async (
 
   try {
     const user = await api.users.byUserId();
+
+    if (!user) {
+      return {
+        redirect: {
+          permanent: false,
+          destination: "/",
+        },
+        props: {},
+      };
+    }
 
     if (user?.role === "candidate") {
       return {

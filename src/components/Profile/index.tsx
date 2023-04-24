@@ -31,7 +31,7 @@ export function Profile() {
   }`;
 
   return (
-    <div className="container max-w-2xl">
+    <div className="px-8 md:px-0 md:mx-auto md:max-w-4xl">
       <form className="flex flex-col" onSubmit={onSubmit}>
         <div className="mt-10 flex justify-end">
           <button className="px-4 py-2 bg-primary  text-white rounded cursor-pointer gap-2">
@@ -39,7 +39,7 @@ export function Profile() {
           </button>
         </div>
 
-        <div className="flex flex-col md:flex-row items-center w-full justify-between">
+        <div className="flex flex-col md:flex-row items-start w-full justify-between">
           <div className="mt-4 w-full md:w-auto">
             <h2 className="text-primary/70">
               {isCandidate ? "Nome" : "Nome da empresa"}
