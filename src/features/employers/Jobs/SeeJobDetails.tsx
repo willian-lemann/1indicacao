@@ -71,9 +71,9 @@ export function SeeJobDetails({ id }: SeeJobDetailsProps) {
                     </div>
                   ) : (
                     <div className="mt-4">
-                      <h1>{job?.position || ""}</h1>
+                      <h1 className="font-bold">{job?.position || ""}</h1>
 
-                      <p>{job?.description || ""}</p>
+                      <p className="pt-2">{job?.description || ""}</p>
 
                       <p className="py-4">Salário {job?.salary || ""}</p>
 
@@ -84,14 +84,16 @@ export function SeeJobDetails({ id }: SeeJobDetailsProps) {
                         <div className="flex items-center gap-4">
                           <p>{job?.user?.phone}</p>
 
-                          <div className="relative h-6 w-6">
-                            <Image
-                              src="/whatsapp.svg"
-                              alt="whatsapp icon"
-                              className="object-cover text-[0]"
-                              fill
-                            />
-                          </div>
+                          {job?.user?.phone ? (
+                            <div className="relative h-6 w-6">
+                              <Image
+                                src="/whatsapp.svg"
+                                alt="whatsapp icon"
+                                className="object-cover text-[0]"
+                                fill
+                              />
+                            </div>
+                          ) : null}
                         </div>
                       </div>
                     </div>
