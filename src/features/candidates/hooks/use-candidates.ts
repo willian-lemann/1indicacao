@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { CandidatesStore } from "../types/candidates-store";
 
 const candidatesStore = create<CandidatesStore>()((set, get) => ({
-  isEmpty: get()?.candidates.length === 0,
   candidates: [],
   isWarningFullProfile: true,
   setCandidates: (candidates) => set({ candidates }),
@@ -33,6 +32,7 @@ export function useCandidates() {
   }, []);
 
   return {
+    isEmpty: state.candidates.length === 0,
     ...state,
   };
 }

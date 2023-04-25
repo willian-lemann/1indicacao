@@ -87,7 +87,7 @@ export function Profile() {
           </div>
         </div>
 
-        <div className="mt-4 w-full">
+        <div className="my-4 w-full">
           <h2 className="text-primary/70">
             {isCandidate
               ? "Fale um pouco sobre suas experiencias:"

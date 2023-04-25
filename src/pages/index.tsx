@@ -6,6 +6,7 @@ import { api } from "@/utils/api";
 import { classnames } from "@/utils/classnames";
 import { getAuth } from "@clerk/nextjs/server";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { FormEvent, useState } from "react";
 import ReactSelect from "react-select";
