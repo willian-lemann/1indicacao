@@ -61,7 +61,7 @@ export default function Home({ locations }: HomeProps) {
       <h1 className="text-lg px-8">{getLabel(nextStep, role)}</h1>
 
       {nextStep ? (
-        <div className="space-y-4 relative w-full px-8">
+        <div className="space-y-4 relative w-full px-8 md:max-w-sm">
           <div>
             <input
               type="text"
@@ -108,7 +108,7 @@ export default function Home({ locations }: HomeProps) {
         </div>
       )}
 
-      <div className="px-8 w-full">
+      <div className="px-8 w-full md:max-w-sm">
         {nextStep ? (
           <button
             type="submit"
