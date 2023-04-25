@@ -12,7 +12,7 @@ export function Candidates() {
 
       <ul className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
         {isEmpty ? (
-          <div className="flex items-center justify-center p-10">
+          <div className="flex items-center text-primary/70 justify-center md:p-10">
             <h2>Nenhum candidato cadastrado ainda.</h2>
           </div>
         ) : null}

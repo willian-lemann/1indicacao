@@ -52,7 +52,7 @@ export default function WarningFillProfile() {
                 <div className="mt-10">
                   <h1 className="leading-relaxed">
                     É muito importante que você preencha completamente todas as
-                    informações do seu perfil na plataforma de recrutamento.
+                    informações do seu perfil na plataforma.
                     Isso permitirá que a empresa saiba mais sobre você, suas
                     habilidades e experiências, o que aumentará suas chances de
                     ser chamado para uma entrevista.

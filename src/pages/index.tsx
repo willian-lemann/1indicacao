@@ -6,6 +6,7 @@ import { api } from "@/utils/api";
 import { classnames } from "@/utils/classnames";
 import { getAuth } from "@clerk/nextjs/server";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { FormEvent, useState } from "react";
 import ReactSelect from "react-select";
@@ -53,16 +54,19 @@ export default function Home({ locations }: HomeProps) {
     return "Qual seu nome e região que você mora?";
   }
 
+  const placeholder = role === "candidate" ? "Seu nome" : "Nome da sua empresa";
+
   return (
     <main className="flex min-h-screen flex-col gap-10 items-center justify-center list-none">
-      <h1 className="text-lg">{getLabel(nextStep, role)}</h1>
+      <h1 className="text-lg px-8">{getLabel(nextStep, role)}</h1>
+
       {nextStep ? (
-        <div className="space-y-4 relative">
+        <div className="space-y-4 relative w-full px-8 md:max-w-sm">
           <div>
             <input
               type="text"
-              placeholder="seu nome"
-              className="px-4 py-2 outline-none border rounded"
+              placeholder={placeholder}
+              className="px-4 py-2 w-full outline-none border rounded"
               value={name}
               onChange={({ target }) => setName(target.value)}
             />
@@ -75,6 +79,9 @@ export default function Home({ locations }: HomeProps) {
             }))}
             placeholder="Selecione uma região"
             onChange={(option) => setLocationId(String(option?.value))}
+            classNames={{
+              control: () => "!py-0.5",
+            }}
           />
         </div>
       ) : (
@@ -101,30 +108,32 @@ export default function Home({ locations }: HomeProps) {
         </div>
       )}
 
-      {nextStep ? (
-        <button
-          type="submit"
-          onClick={handleSubmit}
-          className={classnames(
-            role ? "bg-primary" : "bg-indigo-600/20",
-            "px-4 py-2 rounded text-white hover:brightness-95 transition-all flex items-center"
-          )}
-        >
-          <span className="pr-2">Entrar</span>
-          {isLoading ? <Loading /> : null}
-        </button>
-      ) : (
-        <button
-          type="button"
-          onClick={handleNext}
-          className={classnames(
-            role ? "bg-primary" : "bg-indigo-600/20",
-            "px-4 py-2 rounded text-white hover:brightness-95 transition-all"
-          )}
-        >
-          Prosseguir
-        </button>
-      )}
+      <div className="px-8 w-full md:max-w-sm">
+        {nextStep ? (
+          <button
+            type="submit"
+            onClick={handleSubmit}
+            className={classnames(
+              role ? "bg-primary" : "bg-indigo-600/20",
+              "px-4 py-2 w-full rounded text-white hover:brightness-95 transition-all flex items-center justify-center gap-4"
+            )}
+          >
+            <span>Entrar</span>
+            {isLoading ? <Loading /> : null}
+          </button>
+        ) : (
+          <button
+            type="button"
+            onClick={handleNext}
+            className={classnames(
+              role ? "bg-primary" : "bg-indigo-600/20",
+              "px-4 py-2 w-full rounded text-white hover:brightness-95 transition-all flex items-center justify-center"
+            )}
+          >
+            Prosseguir
+          </button>
+        )}
+      </div>
     </main>
   );
 }
