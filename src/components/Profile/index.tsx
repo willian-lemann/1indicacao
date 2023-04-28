@@ -4,6 +4,8 @@ import { useAuth } from "@/features/authentication/hooks/use-auth";
 import { api } from "@/utils/api";
 import { addSuccessNotification } from "../Alert";
 import { UpdateUserSchemaData } from "@/server/api/routers/users";
+import { Input } from "../Input";
+import { Textarea } from "../Textarea";
 
 export function Profile() {
   const { user, isCandidate } = useAuth();
@@ -40,67 +42,51 @@ export function Profile() {
         </div>
 
         <div className="flex flex-col md:flex-row items-start w-full justify-between">
-          <div className="mt-4 w-full md:w-auto">
-            <h2 className="text-primary/70">
+          <Input
+            placeholder={isCandidate ? "Nome" : "Nome da empresa"}
+            {...register("name")}
+          >
+            <Input.Label>
               {isCandidate ? "Nome" : "Nome da empresa"}
-            </h2>
-            <input
-              type="text"
-              placeholder="nome"
-              className="px-4 py-2 outline-none border border-primary rounded mt-2"
-              {...register("name")}
-            />
-          </div>
+            </Input.Label>
+          </Input>
 
           {isCandidate ? (
-            <div className="mt-4">
-              <h2 className="text-primary/70">Seu cargo</h2>
-              <input
-                type="text"
-                placeholder="seu cargo"
-                className="px-4 py-2 outline-none border border-primary rounded mt-2"
-                {...register("position")}
-              />
-            </div>
+            <Input placeholder="seu cargo" {...register("position")}>
+              <Input.Label>Seu cargo</Input.Label>
+            </Input>
           ) : null}
         </div>
 
-        <div className="flex flex-col md:flex-row items-center w-full justify-between">
-          <div className="mt-4 w-full md:w-auto">
-            <h2 className="text-primary/70">Whatsapp (opcional)</h2>
-            <input
-              type="text"
-              placeholder="whatsapp"
-              className="px-4 py-2 outline-none border border-primary rounded mt-2"
-              {...register("phone")}
-            />
-          </div>
+        <div className="flex mt-4  flex-col md:flex-row items-start w-full justify-between">
+          <Input
+            placeholder="whatsapp"
+            className="px-4 py-2 outline-none border border-primary rounded mt-2"
+            {...register("phone")}
+          >
+            <Input.Label>WhatsApp (opcional)</Input.Label>
+          </Input>
 
-          <div className="mt-4 w-full md:ml-4">
-            <h2 className="text-primary/70">Instagram (opcional)</h2>
-            <input
-              type="text"
-              placeholder="link do instagram"
-              className="px-4 py-2 outline-none w-full border border-primary rounded mt-2"
-              {...register("instagram")}
-            />
-          </div>
+          <Input
+            placeholder="link do instagram"
+            className="px-4 py-2 outline-none w-full border border-primary rounded mt-2"
+            {...register("instagram")}
+          >
+            <Input.Label>Instagram (opcional)</Input.Label>
+          </Input>
         </div>
 
-        <div className="my-4 w-full">
-          <h2 className="text-primary/70">
+        <Textarea
+          id="description"
+          placeholder={placeholder}
+          {...register("description")}
+        >
+          <Textarea.Label>
             {isCandidate
               ? "Fale um pouco sobre suas experiencias:"
               : "Breve descrição da empresa"}
-          </h2>
-
-          <textarea
-            id="description"
-            className="border  border-primary w-full h-[300px] p-4 rounded mt-2"
-            placeholder={placeholder}
-            {...register("description")}
-          />
-        </div>
+          </Textarea.Label>
+        </Textarea>
       </form>
 
       {/* <div className="my-10 flex items-center justify-center w-full">

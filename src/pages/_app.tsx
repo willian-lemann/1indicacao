@@ -27,7 +27,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       {...pageProps}
       localization={{
         socialButtonsBlockButton: "Continue com google",
-        formFieldLabel__emailAddress: "Email",
+        formFieldLabel__emailAddress: "E-mail",
         dividerText: "ou",
 
         footerActionLink__useAnotherMethod: "Usar outra forma de acesso",
@@ -65,6 +65,13 @@ const App = ({ Component, pageProps }: AppProps) => {
           },
         },
         signUp: {
+          emailCode: {
+            title: "Cheque seu e-mail",
+            subtitle: "Um código de verificação foi enviado pro seu e-mail",
+            resendButton: "Re-enviar código",
+            formSubtitle: "Digite o código",
+            formTitle: "Código de Verificação",
+          },
           start: {
             title: "Crie uma conta",
             subtitle: "para entrar no 1indicação",
