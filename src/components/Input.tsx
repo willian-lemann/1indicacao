@@ -1,6 +1,14 @@
-import { HTMLAttributes, PropsWithChildren } from "react";
+import { classnames } from "@/utils/classnames";
+import {
+  HTMLAttributes,
+  HTMLInputTypeAttribute,
+  PropsWithChildren,
+} from "react";
 
-type InputProps = HTMLAttributes<HTMLInputElement>;
+type InputProps = HTMLAttributes<HTMLInputElement> & {
+  type?: string;
+  register: any;
+};
 
 const Label = ({ children }: PropsWithChildren) => {
   return (
@@ -10,15 +18,24 @@ const Label = ({ children }: PropsWithChildren) => {
   );
 };
 
-export function Input({ children, ...props }: PropsWithChildren<InputProps>) {
+export function Input({
+  children,
+  register,
+  className,
+  ...props
+}: PropsWithChildren<InputProps>) {
   return (
-    <div>
+    <div className="space-y-1">
       {children}
 
-      <div className="relative mt-1 rounded-md shadow-sm">
+      <div className="relative rounded-md shadow-sm">
         <input
           {...props}
-          className="block w-full rounded-md border-0 py-1.5 pl-2 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          className={classnames(
+            String(className),
+            "rounded-md border-0 py-1.5 px-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
+          )}
+          {...register}
         />
       </div>
     </div>

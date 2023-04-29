@@ -10,7 +10,7 @@ export function CandidatesJobList() {
   const { jobs, isEmpty } = useJobs();
 
   return (
-    <ul>
+    <ul className="md:overflow-auto md:max-h-[calc(100vh-208px)] px-4 mb-10 md:mb-0">
       {isEmpty ? (
         <div className="flex items-center justify-center p-10">
           <h2>Não há vagas cadastradas ainda</h2>

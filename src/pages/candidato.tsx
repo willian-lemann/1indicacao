@@ -1,13 +1,21 @@
-import { Header } from "@/components/Header";
+import { Header, Permissions } from "@/components/Header";
 import { Profile } from "@/components/Profile";
 import { useAuth } from "@/features/authentication/hooks/use-auth";
+import { Location } from "@/features/authentication/types/location";
 import WarningFillProfile from "@/features/candidates/WarningFillProfile";
 import { Jobs } from "@/features/employers/Jobs";
+import { LocationOption } from "@/features/locations/types/location-option";
 import { getSSRAppRouter } from "@/server/api/root";
 import { Tab } from "@headlessui/react";
+import { User } from "@prisma/client";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 
-export default function Candidate() {
+type EmployerProps = {
+  permissions: Permissions;
+  locations: LocationOption[];
+};
+
+export default function Candidate({ permissions, locations }: EmployerProps) {
   const { hasFullProfile } = useAuth();
 
   return (
@@ -16,7 +24,7 @@ export default function Candidate() {
 
       <div>
         <Tab.Group defaultIndex={hasFullProfile ? 1 : 0}>
-          <Header />
+          <Header permissions={permissions} locations={locations} />
           <Tab.Panels>
             <Tab.Panel>
               <Profile />
@@ -36,8 +44,12 @@ export const getServerSideProps: GetServerSideProps = async (
 ) => {
   const api = getSSRAppRouter(context);
 
+  let user: User | null;
+  let locations: Location[];
+
   try {
-    const user = await api.users.byUserId();
+    user = await api.users.byUserId();
+    locations = await api.locations.getAll();
 
     if (!user) {
       return {
@@ -58,6 +70,19 @@ export const getServerSideProps: GetServerSideProps = async (
         props: {},
       };
     }
+
+    return {
+      props: {
+        permissions: {
+          isCandidate: String(user.role) === "candidate",
+          isEmployer: String(user.role) === "employer",
+        },
+        locations: locations.map((location) => ({
+          label: location.name,
+          value: location.id,
+        })),
+      },
+    };
   } catch (error: any) {
     if (error.code === "UNAUTHORIZED") {
       return {

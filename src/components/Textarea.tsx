@@ -1,6 +1,10 @@
+import { classnames } from "@/utils/classnames";
 import { HTMLAttributes, PropsWithChildren } from "react";
 
-type TextareaProps = HTMLAttributes<HTMLTextAreaElement>;
+type TextareaProps = HTMLAttributes<HTMLTextAreaElement> & {
+  type?: string;
+  register?: any;
+};
 
 const Label = ({ children }: PropsWithChildren) => {
   return (
@@ -12,15 +16,19 @@ const Label = ({ children }: PropsWithChildren) => {
 
 export function Textarea({
   children,
+  className,
   ...props
 }: PropsWithChildren<TextareaProps>) {
   return (
-    <div className="my-4  w-full">
+    <div className="my-4 w-full">
       {children}
 
       <textarea
         {...props}
-        className="mt-1 w-full h-[300px] rounded-md border-0 py-3 pl-4 text-primary ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 "
+        className={classnames(
+          String(className),
+          "mt-1 w-full rounded-md border-0 py-3 pl-4 text-primary ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 "
+        )}
       />
     </div>
   );

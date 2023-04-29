@@ -6,7 +6,6 @@ import { MobileEmployerJobCard } from "../mobile/MobileEmployerJobCard";
 
 export function EmployersJobList() {
   const { jobs, isEmpty } = useJobs();
-  const { isCandidate } = useAuth();
 
   return (
     <ul className="mt-10 md:mt-0">
