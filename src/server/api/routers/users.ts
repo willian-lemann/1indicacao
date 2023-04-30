@@ -64,9 +64,11 @@ export const usersRouter = createTRPCRouter({
     }),
 
   byUserId: privateProcedure.query(async ({ ctx }) => {
-    console.log("ctxxxxxxxxxx", ctx.currentUser);
     const user = await ctx.prisma.user.findUnique({
       where: { userId: ctx.currentUser },
+      include: {
+        location: true,
+      },
     });
 
     return user;
@@ -78,5 +80,13 @@ export const usersRouter = createTRPCRouter({
     });
 
     return candidates;
+  }),
+
+  getAllCompanies: privateProcedure.query(async ({ ctx }) => {
+    const employers = await ctx.prisma.user.findMany({
+      where: { role: "employer" },
+    });
+
+    return employers;
   }),
 });

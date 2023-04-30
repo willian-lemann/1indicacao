@@ -17,6 +17,12 @@ import { AlertProvider } from "@/components/Alert";
 
 const publicPages = ["/sign-in", "/sign-up"];
 
+import { Inter } from "@next/font/google";
+const inter = Inter({
+  weight: ["400", "600", "700"],
+  subsets: ["latin"],
+});
+
 const App = ({ Component, pageProps }: AppProps) => {
   const { pathname } = useRouter();
 
@@ -86,7 +92,9 @@ const App = ({ Component, pageProps }: AppProps) => {
       ) : (
         <>
           <SignedIn>
-            <Component {...pageProps} />
+            <main className={inter.className}>
+              <Component {...pageProps} />
+            </main>
           </SignedIn>
           <SignedOut>
             <RedirectToSignIn />

@@ -14,7 +14,7 @@ export function MobileCandidateJobCard({ job }: MobileCandidatesJobListProps) {
   return (
     <li
       key={job.id}
-      className="flex  justify-between flex-col md:hidden border py-10 px-6 md:p-6 rounded text-primary/90 mb-4 last:mb-0 relative"
+      className="flex justify-between flex-col md:hidden border py-10 px-6 md:p-6 rounded text-primary/90 mb-10 md:mb-0 last:mb-0 relative"
     >
       <div className="flex items-center justify-between">
         <p className="">{job.user?.name}</p>

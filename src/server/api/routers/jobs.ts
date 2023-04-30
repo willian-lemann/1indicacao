@@ -54,6 +54,7 @@ export const jobsRouter = createTRPCRouter({
           user: {
             select: {
               name: true,
+              locationId: true,
             },
           },
         },

@@ -3,12 +3,24 @@ import { Tab } from "@headlessui/react";
 
 import { useAuth } from "@/features/authentication/hooks/use-auth";
 import { classnames } from "@/utils/classnames";
-import { MobileHeader } from "./MobileHeader";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
+import ReactSelect from "react-select";
+import { LocationSelect } from "@/features/locations/LocationSelect";
+import { LocationOption } from "@/features/locations/types/location-option";
 
-export function Header() {
-  const { user, signOut } = useAuth();
+export type Permissions = {
+  isCandidate: boolean;
+  isEmployer: boolean;
+};
+
+type HeaderProps = {
+  permissions: Permissions;
+  locations: LocationOption[];
+};
+
+export function Header({ permissions, locations }: HeaderProps) {
+  const { signOut } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
   function openMenu() {
@@ -21,7 +33,7 @@ export function Header() {
 
   return (
     <header className="shadow-md">
-      <div className="md:px-0 px-8 md:container flex items-center justify-between py-6 ">
+      <div className="px-8 md:container md:px-20 flex items-center justify-between py-6">
         <div className="hidden md:flex relative h-10 w-10">
           <Image src="/icon.svg" alt="icone" fill />
         </div>
@@ -61,19 +73,34 @@ export function Header() {
             )}
           </Tab>
 
-          {user?.role === "candidate" ? (
-            <Tab className="outline-none">
-              {({ selected }) => (
-                <button
-                  className={classnames(
-                    selected ? "border-b-2 border-primary" : "",
-                    "py-1"
-                  )}
-                >
-                  Vagas
-                </button>
-              )}
-            </Tab>
+          {permissions.isCandidate ? (
+            <>
+              <Tab className="outline-none">
+                {({ selected }) => (
+                  <button
+                    className={classnames(
+                      selected ? "border-b-2 border-primary" : "",
+                      "py-1"
+                    )}
+                  >
+                    Empresas
+                  </button>
+                )}
+              </Tab>
+
+              <Tab className="outline-none">
+                {({ selected }) => (
+                  <button
+                    className={classnames(
+                      selected ? "border-b-2 border-primary" : "",
+                      "py-1"
+                    )}
+                  >
+                    Vagas
+                  </button>
+                )}
+              </Tab>
+            </>
           ) : (
             <>
               <Tab className="outline-none">
@@ -104,6 +131,8 @@ export function Header() {
             </>
           )}
         </Tab.List>
+
+        <LocationSelect locations={locations} />
 
         <div>
           <button

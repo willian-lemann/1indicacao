@@ -12,6 +12,7 @@ datasource db {
 model User {
   id          String   @unique @default(uuid())
   name        String?
+  email       String?  @unique
   userId      String   @unique
   role        String
   jobs        Job[]

@@ -1,3 +1,4 @@
+import { useLocations } from "@/features/locations/hooks/use-locations";
 import { addCookie, getCookie } from "@/lib/cookies";
 import { create } from "@/lib/store";
 import { useEffect } from "react";
@@ -25,6 +26,13 @@ const candidatesStore = create<CandidatesStore>()((set, get) => ({
 
 export function useCandidates() {
   const state = candidatesStore((state) => state);
+  const { selectedLocation } = useLocations();
+
+  const filteredCandidates = state.candidates.filter(
+    (candidate) => candidate.locationId === selectedLocation?.value
+  );
+
+  const candidates = filteredCandidates;
 
   useEffect(() => {
     state.loadWarningFullProfileStorage();
@@ -32,7 +40,8 @@ export function useCandidates() {
   }, []);
 
   return {
-    isEmpty: state.candidates.length === 0,
     ...state,
+    isEmpty: candidates.length === 0,
+    candidates,
   };
 }

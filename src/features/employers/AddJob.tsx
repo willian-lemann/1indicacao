@@ -1,8 +1,13 @@
 import { addSuccessNotification } from "@/components/Alert";
+import { Input } from "@/components/Input";
+import { Loading } from "@/components/Loading";
+import { SaveButton } from "@/components/SaveButton";
+import { Textarea } from "@/components/Textarea";
 import { CreateJobSchemaData } from "@/server/api/routers/jobs";
 import { api } from "@/utils/api";
 import { uniqueId } from "@/utils/uniqueId";
 import { Dialog, Transition } from "@headlessui/react";
+import { XMarkIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/router";
 import { Fragment, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -18,7 +23,7 @@ export default function AddJob() {
   const [isOpen, setIsOpen] = useState(false);
   const { register, handleSubmit } = useForm<CreateJobSchemaData>();
 
-  const { mutateAsync } = api.jobs.create.useMutation();
+  const { mutateAsync, isLoading } = api.jobs.create.useMutation();
 
   const onSubmit = handleSubmit(async (data) => {
     const newJob = { ...data, positions: String(data.positions) };
@@ -30,7 +35,11 @@ export default function AddJob() {
     setIsOpen(false);
 
     addNewJob({
-      user: { name: user.name as string },
+      user: {
+        ...user,
+        locationId: String(user.locationId),
+        name: user.name as string,
+      },
       id: uniqueId,
       createdAt: new Date(),
       isActive: true,
@@ -74,7 +83,7 @@ export default function AddJob() {
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
+            <div className="flex justify-center items-center h-full text-center">
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
@@ -84,61 +93,56 @@ export default function AddJob() {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                  <form onSubmit={onSubmit} className="flex flex-col">
+                <Dialog.Panel className="w-full max-w-md md:max-w-2xl transform h-[700px] rounded-2xl bg-white p-6 overflow-auto text-left align-middle shadow-xl transition-all">
+                  <form
+                    onSubmit={onSubmit}
+                    className="flex flex-col justify-between h-full"
+                  >
                     <Dialog.Title
                       as="h3"
-                      className="text-lg font-medium leading-6 text-gray-900"
+                      className="text-lg flex items-center justify-between font-medium leading-6 text-gray-900"
                     >
                       Cadastrar vaga
+                      <XMarkIcon className="h-6 w-6" onClick={closeModal} />
                     </Dialog.Title>
                     <div className="mt-2">
-                      <div>
-                        <h2 className="opacity-70">Número de vagas</h2>
-                        <input
-                          type="number"
-                          className="px-4 py-2 outline-none border border-primary rounded border-opacity-50 mb-4"
-                          placeholder="Número de vagas"
-                          {...register("positions")}
-                        />
-                      </div>
+                      <Input
+                        type="number"
+                        className="px-4 py-2 outline-none border border-primary rounded border-opacity-50 mb-4"
+                        placeholder="Número de vagas"
+                        register={register("positions")}
+                      >
+                        <Input.Label>Número de vagas</Input.Label>
+                      </Input>
 
-                      <div>
-                        <h2 className="opacity-70">Remuneração</h2>
-                        <input
-                          type="text"
-                          className="px-4 py-2 outline-none border border-primary rounded border-opacity-50 mb-4"
-                          placeholder="Remuneração"
-                          {...register("salary")}
-                        />
-                      </div>
+                      <Input
+                        type="text"
+                        className="px-4 py-2 outline-none border border-primary rounded border-opacity-50 mb-4"
+                        placeholder="Remuneração"
+                        register={register("salary")}
+                      >
+                        <Input.Label>Remuneração</Input.Label>
+                      </Input>
 
-                      <div>
-                        <h2 className="opacity-70">Cargo ou função</h2>
-                        <textarea
-                          className="px-4 py-2 outline-none border border-primary rounded border-opacity-50 mb-4 w-full"
-                          placeholder="Descrição da vaga"
-                          {...register("position")}
-                        />
-                      </div>
+                      <Input
+                        className="px-4 py-2 outline-none border border-primary rounded border-opacity-50 mb-4 w-full"
+                        placeholder="Descrição da vaga"
+                        register={register("position")}
+                      >
+                        <Input.Label>Cargo ou função</Input.Label>
+                      </Input>
 
-                      <div>
-                        <h2 className="opacity-70">Descrição da vaga</h2>
-                        <textarea
-                          className="px-4 py-2 outline-none border h-40 border-primary rounded border-opacity-50 mb-4 w-full"
-                          placeholder="Descrição da vaga"
-                          {...register("description")}
-                        />
-                      </div>
+                      <Textarea
+                        className="px-4 py-2 outline-none border h-48 border-primary rounded border-opacity-50 mb-4 w-full"
+                        placeholder="Descrição da vaga"
+                        register={register("description")}
+                      >
+                        <Textarea.Label>Descrição da vaga</Textarea.Label>
+                      </Textarea>
                     </div>
 
                     <div className="mt-4 self-end">
-                      <button
-                        type="submit"
-                        className="inline-flex justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white "
-                      >
-                        Salvar
-                      </button>
+                      <SaveButton loading={isLoading} />
                     </div>
                   </form>
                 </Dialog.Panel>

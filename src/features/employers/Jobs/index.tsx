@@ -5,14 +5,11 @@ import AddJob from "@/features/employers/AddJob";
 import { EmployersJobList } from "./EmployersJobList";
 import { CandidatesJobList } from "./CandidatesJobList";
 import { classnames } from "@/utils/classnames";
-import { useFetchJobs } from "../hooks/use-fetch-jobs";
-
 export function Jobs() {
-  const { isEmployer } = useAuth();
-  useFetchJobs();
+  const { isEmployer, isCandidate } = useAuth();
 
   return (
-    <div className="px-8 md:container py-4 z-0">
+    <div className="px-8 md:container py-4 z-0 relative">
       {isEmployer ? (
         <div className="flex mt-4 md:mt-0 items-center justify-between">
           <h1 className="text-lg">Minhas Vagas</h1>
@@ -26,10 +23,10 @@ export function Jobs() {
           isEmployer
             ? "grid-cols-[1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr]"
             : "grid-cols-[1fr,1fr,1fr,1fr,1fr,1fr]",
-          "mt-4 text-primary font-semibold p-6 hidden md:grid"
+          "mt-4 text-primary font-semibold px-10 py-4 hidden md:grid"
         )}
       >
-        {isEmployer ? null : <p>Nome</p>}
+        {isCandidate ? <p>Nome</p> : null}
         <p className="flex items-center">Nº de Vagas</p>
         <p className="flex items-center">Remuneração</p>
         <p className="flex items-center">Status</p>

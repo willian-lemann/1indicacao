@@ -13,7 +13,9 @@ export function useAuth() {
 
   const currentUser = {
     ...data,
+    email: user?.emailAddresses,
     avatar: user?.profileImageUrl,
+    location: data?.location.name,
   } as User;
 
   function validateIfUserHasFullProfile(user: User) {
