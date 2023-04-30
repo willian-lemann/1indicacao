@@ -15,6 +15,7 @@ type HomeProps = { locations: Location[] };
 
 export default function Home({ locations }: HomeProps) {
   const { mutateAsync, isLoading } = api.users.create.useMutation();
+  const { user } = useAuth();
 
   const router = useRouter();
   const [role, setRole] = useState("");
@@ -33,7 +34,7 @@ export default function Home({ locations }: HomeProps) {
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
 
-    await mutateAsync({ role, name, locationId });
+    await mutateAsync({ role, name, locationId, email: String(user.email) });
 
     if (role === "candidate") {
       router.push("/candidato");

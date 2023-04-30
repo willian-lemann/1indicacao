@@ -13,7 +13,7 @@ export function useAuth() {
 
   const currentUser = {
     ...data,
-    email: user?.emailAddresses,
+    email: user?.emailAddresses[0].emailAddress,
     avatar: user?.profileImageUrl,
     location: data?.location.name,
   } as User;
