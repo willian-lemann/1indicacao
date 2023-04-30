@@ -3,7 +3,7 @@ export type Job = {
   position: string;
   positions: number;
   salary: string;
-  user: { name: string | null } | null;
+  user: { name: string | null; locationId: string | null } | null;
   isActive: boolean;
   createdAt: Date;
 };

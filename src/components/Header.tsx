@@ -74,18 +74,33 @@ export function Header({ permissions, locations }: HeaderProps) {
           </Tab>
 
           {permissions.isCandidate ? (
-            <Tab className="outline-none">
-              {({ selected }) => (
-                <button
-                  className={classnames(
-                    selected ? "border-b-2 border-primary" : "",
-                    "py-1"
-                  )}
-                >
-                  Empresas
-                </button>
-              )}
-            </Tab>
+            <>
+              <Tab className="outline-none">
+                {({ selected }) => (
+                  <button
+                    className={classnames(
+                      selected ? "border-b-2 border-primary" : "",
+                      "py-1"
+                    )}
+                  >
+                    Empresas
+                  </button>
+                )}
+              </Tab>
+
+              <Tab className="outline-none">
+                {({ selected }) => (
+                  <button
+                    className={classnames(
+                      selected ? "border-b-2 border-primary" : "",
+                      "py-1"
+                    )}
+                  >
+                    Vagas
+                  </button>
+                )}
+              </Tab>
+            </>
           ) : (
             <>
               <Tab className="outline-none">

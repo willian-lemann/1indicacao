@@ -2,21 +2,30 @@ import ReactSelect from "react-select";
 import { LocationOption } from "@/features/locations/types/location-option";
 import { useLocations } from "./hooks/use-locations";
 import { useAuth } from "../authentication/hooks/use-auth";
+import { useEffect } from "react";
 
 type ReactSelectProps = {
   locations: LocationOption[];
 };
 
 export function LocationSelect({ locations }: ReactSelectProps) {
-  const { selectedLocation, setLocation } = useLocations({
-    initialLocations: locations,
-  });
+  const { selectedLocation, setLocation } = useLocations();
+  const { user } = useAuth();
+
+  const defaultLocation = locations.find(
+    (location) => location.value === user.locationId
+  );
+
+  useEffect(() => {
+    setLocation(defaultLocation as LocationOption);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaultLocation]);
 
   return (
     <ReactSelect
       placeholder="Selecione uma região"
       options={locations}
-      value={selectedLocation}
+      value={selectedLocation || defaultLocation}
       onChange={(option) => setLocation(option as LocationOption)}
       classNames={{
         container: () => "focus:!primary",

@@ -10,27 +10,9 @@ const locationsStore = create<LocationStore>()((set) => ({
   setLocation: (selectedLocation) => set({ selectedLocation }),
 }));
 
-type UseLocationsProps = {
-  initialLocations: LocationOption[];
-};
-
-export function useLocations(props?: UseLocationsProps) {
+export function useLocations() {
   const state = locationsStore((state) => state);
-  const { user } = useAuth();
 
-  useEffect(() => {
-    if (props?.initialLocations) {
-      state.locations = props?.initialLocations as LocationOption[];
-
-      const defaultLocation = props.initialLocations.find(
-        (location) => location.value === user.locationId
-      );
-
-      if (defaultLocation) {
-        state.selectedLocation = defaultLocation;
-      }
-    }
-  }, [props?.initialLocations, state, user]);
   return {
     ...state,
   };

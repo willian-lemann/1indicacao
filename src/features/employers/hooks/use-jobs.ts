@@ -1,6 +1,8 @@
 import { api } from "@/utils/api";
 import { create } from "@/lib/store";
 import { MyJobsStore } from "../types/myjobs-store";
+import { useEffect } from "react";
+import { useLocations } from "@/features/locations/hooks/use-locations";
 
 const myjobsStore = create<MyJobsStore>()((set, get) => ({
   jobs: [],
@@ -49,9 +51,17 @@ const myjobsStore = create<MyJobsStore>()((set, get) => ({
 export function useJobs() {
   const state = myjobsStore((state) => state);
   const { mutateAsync } = api.jobs.delete.useMutation();
+  const { selectedLocation } = useLocations();
 
+  const filteredJobsFromEmployers = state.jobs.filter(
+    (job) => job.user?.locationId === selectedLocation?.value
+  );
+
+  const jobsFromEmployers = filteredJobsFromEmployers;
+
+  console.log(state.jobs);
   async function deleteJob(id: string) {
-    const previousJobs = structuredClone(state.jobs);
+    const previousJobs = structuredClone(jobsFromEmployers);
 
     state.deleteJob(id);
 
@@ -65,7 +75,7 @@ export function useJobs() {
   return {
     ...state,
     deleteJob,
-    jobs: !state.jobs ? [] : state.jobs,
-    isEmpty: state.jobs?.length === 0,
+    jobs: !jobsFromEmployers ? [] : jobsFromEmployers,
+    isEmpty: jobsFromEmployers?.length === 0,
   };
 }

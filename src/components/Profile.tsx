@@ -40,7 +40,7 @@ export function Profile() {
           <SaveButton loading={isLoading} />
         </div>
 
-        <div className="flex flex-col md:flex-row items-start w-full justify-between">
+        <div className="flex flex-col md:flex-row items-start w-full justify-between mt-4">
           <Input
             type="text"
             placeholder={isCandidate ? "Nome" : "Nome da empresa"}

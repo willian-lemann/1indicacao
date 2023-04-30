@@ -7,6 +7,7 @@ import { CreateJobSchemaData } from "@/server/api/routers/jobs";
 import { api } from "@/utils/api";
 import { uniqueId } from "@/utils/uniqueId";
 import { Dialog, Transition } from "@headlessui/react";
+import { XMarkIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/router";
 import { Fragment, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -34,7 +35,11 @@ export default function AddJob() {
     setIsOpen(false);
 
     addNewJob({
-      user: { name: user.name as string },
+      user: {
+        ...user,
+        locationId: String(user.locationId),
+        name: user.name as string,
+      },
       id: uniqueId,
       createdAt: new Date(),
       isActive: true,
@@ -95,9 +100,10 @@ export default function AddJob() {
                   >
                     <Dialog.Title
                       as="h3"
-                      className="text-lg font-medium leading-6 text-gray-900"
+                      className="text-lg flex items-center justify-between font-medium leading-6 text-gray-900"
                     >
                       Cadastrar vaga
+                      <XMarkIcon className="h-6 w-6" onClick={closeModal} />
                     </Dialog.Title>
                     <div className="mt-2">
                       <Input

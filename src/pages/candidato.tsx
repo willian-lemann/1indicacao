@@ -3,6 +3,9 @@ import { Profile } from "@/components/Profile";
 import { useAuth } from "@/features/authentication/hooks/use-auth";
 import { Location } from "@/features/authentication/types/location";
 import WarningFillProfile from "@/features/candidates/WarningFillProfile";
+import { Companies } from "@/features/employers/Companies";
+import { useFetchCompanies } from "@/features/employers/hooks/use-fetch-companies";
+import { useFetchJobs } from "@/features/employers/hooks/use-fetch-jobs";
 import { Jobs } from "@/features/employers/Jobs";
 import { LocationOption } from "@/features/locations/types/location-option";
 import { getSSRAppRouter } from "@/server/api/root";
@@ -17,6 +20,8 @@ type EmployerProps = {
 
 export default function Candidate({ permissions, locations }: EmployerProps) {
   const { hasFullProfile } = useAuth();
+  useFetchCompanies();
+  useFetchJobs();
 
   return (
     <>
@@ -29,6 +34,10 @@ export default function Candidate({ permissions, locations }: EmployerProps) {
             <Tab.Panel>
               <Profile />
             </Tab.Panel>
+            <Tab.Panel>
+              <Companies />
+            </Tab.Panel>
+
             <Tab.Panel>
               <Jobs />
             </Tab.Panel>

@@ -1,6 +1,5 @@
 import { useJobs } from "../hooks/use-jobs";
 
-import { useAuth } from "@/features/authentication/hooks/use-auth";
 import { EmployerJobCard } from "./EmployerJobCard";
 import { MobileEmployerJobCard } from "../mobile/MobileEmployerJobCard";
 
@@ -10,8 +9,8 @@ export function EmployersJobList() {
   return (
     <ul className="mt-10 md:mt-0">
       {isEmpty ? (
-        <div className="flex items-center justify-center p-10">
-          <h2>Não há vagas cadastradas</h2>
+        <div className="flex items-center text-center justify-center p-10">
+          <h2>Você ainda nao cadastrou nenhuma vaga</h2>
         </div>
       ) : null}
       {jobs.map((jobItem) => (

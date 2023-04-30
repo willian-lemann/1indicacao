@@ -3,6 +3,7 @@ import { Profile } from "@/components/Profile";
 
 import { Candidates } from "@/features/candidates/Candidates";
 import { useFetchCandidates } from "@/features/candidates/hooks/use-fetch-candidates";
+import { useFetchJobs } from "@/features/employers/hooks/use-fetch-jobs";
 import { Jobs } from "@/features/employers/Jobs";
 import { Location } from "@/features/locations/types/location";
 import { LocationOption } from "@/features/locations/types/location-option";
@@ -19,6 +20,7 @@ type EmployerProps = {
 
 export default function Employer({ permissions, locations }: EmployerProps) {
   useFetchCandidates();
+  useFetchJobs();
 
   return (
     <div>

@@ -5,20 +5,8 @@ import AddJob from "@/features/employers/AddJob";
 import { EmployersJobList } from "./EmployersJobList";
 import { CandidatesJobList } from "./CandidatesJobList";
 import { classnames } from "@/utils/classnames";
-import { useFetchJobs } from "../hooks/use-fetch-jobs";
-import ReactSelect from "react-select";
-import { api } from "@/utils/api";
-
 export function Jobs() {
   const { isEmployer, isCandidate } = useAuth();
-  useFetchJobs();
-
-  const { data } = api.locations.getAll.useQuery();
-
-  const locationOptions = data?.map((location) => ({
-    value: location.id,
-    label: location.name,
-  }));
 
   return (
     <div className="px-8 md:container py-4 z-0 relative">

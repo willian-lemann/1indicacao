@@ -81,4 +81,12 @@ export const usersRouter = createTRPCRouter({
 
     return candidates;
   }),
+
+  getAllCompanies: privateProcedure.query(async ({ ctx }) => {
+    const employers = await ctx.prisma.user.findMany({
+      where: { role: "employer" },
+    });
+
+    return employers;
+  }),
 });
