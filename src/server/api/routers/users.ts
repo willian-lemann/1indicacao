@@ -17,7 +17,12 @@ export type UpdateUserSchemaData = z.infer<typeof updateUserSchema>;
 export const usersRouter = createTRPCRouter({
   create: privateProcedure
     .input(
-      z.object({ role: z.string(), name: z.string(), locationId: z.string() })
+      z.object({
+        role: z.string(),
+        name: z.string(),
+        locationId: z.string(),
+        email: z.string(),
+      })
     )
     .mutation(async ({ input, ctx }) => {
       const { success } = await rateLimit.limit(String(ctx.currentUser));
@@ -28,9 +33,11 @@ export const usersRouter = createTRPCRouter({
         });
       }
 
+      console.log(input.email);
       const userCreated = await ctx.prisma.user.create({
         data: {
           role: input.role,
+          email: input.email,
           name: input.name,
           userId: ctx.currentUser,
           location: { connect: { id: input.locationId } },
