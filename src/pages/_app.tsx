@@ -67,7 +67,7 @@ const App = ({ Component, pageProps }: AppProps) => {
             title: "Faça login",
             subtitle: "para entrar no 1indicação",
             actionText: "Não tem uma conta?",
-            actionLink: "Cadastrar-se",
+            actionLink: "Cadastre-se",
           },
         },
         signUp: {

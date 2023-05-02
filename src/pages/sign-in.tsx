@@ -8,6 +8,11 @@ export default function SignInPage() {
         signUpUrl="/sign-up"
         afterSignInUrl="/"
         redirectUrl="/"
+        appearance={{
+          variables: {
+            colorPrimary: "#110634",
+          },
+        }}
       />
     </div>
   );
