@@ -27,4 +27,4 @@ jobs:
         run: npm install
 
       - name: Deploy migrations
-        run: npx prisma migrate deploy --preview-feature
+        run: npx prisma migrate deploy
