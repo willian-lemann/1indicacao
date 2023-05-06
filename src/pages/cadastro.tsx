@@ -4,8 +4,8 @@ export default function SignUpPage() {
   return (
     <div className="flex items-center justify-center h-screen w-screen">
       <SignUp
-        path="/sign-up"
-        afterSignUpUrl="/"
+        path="/cadastro"
+        afterSignUpUrl="/onboarding"
         appearance={{
           variables: {
             colorPrimary: "#110634",

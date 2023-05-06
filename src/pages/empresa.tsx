@@ -61,7 +61,7 @@ export const getServerSideProps: GetServerSideProps = async (
       return {
         redirect: {
           permanent: false,
-          destination: "/",
+          destination: "/onboarding",
         },
         props: {},
       };
@@ -94,7 +94,7 @@ export const getServerSideProps: GetServerSideProps = async (
       return {
         redirect: {
           permanent: false,
-          destination: "/sign-in",
+          destination: "/login",
         },
         props: {},
       };

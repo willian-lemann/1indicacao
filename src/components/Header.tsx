@@ -8,6 +8,7 @@ import { useState } from "react";
 import ReactSelect from "react-select";
 import { LocationSelect } from "@/features/locations/LocationSelect";
 import { LocationOption } from "@/features/locations/types/location-option";
+import { Logo } from "./Logo";
 
 export type Permissions = {
   isCandidate: boolean;
@@ -34,9 +35,7 @@ export function Header({ permissions, locations }: HeaderProps) {
   return (
     <header className="shadow-md">
       <div className="px-8 md:container md:px-20 flex items-center justify-between py-6">
-        <div className="hidden md:flex relative h-10 w-10">
-          <Image src="/icon.svg" alt="icone" fill />
-        </div>
+        <Logo />
 
         <div className="md:hidden flex relative h-10 w-10">
           <Bars3Icon className="h-10 w-10" onClick={openMenu} />

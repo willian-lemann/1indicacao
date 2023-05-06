@@ -41,10 +41,7 @@ export function CandidateCard({ candidate }: CandidateCard) {
         <p className="line-clamp-3">{candidate.description}</p>
       </div>
 
-      <SeeDetails
-        name={String(candidate.name)}
-        description={String(candidate.description)}
-      />
+      <SeeDetails name={candidate.name} description={candidate.description} />
     </li>
   );
 }

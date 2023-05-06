@@ -15,12 +15,14 @@ import { api } from "@/utils/api";
 import { useRouter } from "next/router";
 import { AlertProvider } from "@/components/Alert";
 
-const publicPages = ["/sign-in", "/sign-up"];
+const publicPages = ["/login", "/cadastro", "/sobre"];
 
 import { Inter } from "@next/font/google";
+
 const inter = Inter({
   weight: ["400", "600", "700"],
   subsets: ["latin"],
+  variable: "--primary-font",
 });
 
 const App = ({ Component, pageProps }: AppProps) => {
@@ -92,9 +94,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       ) : (
         <>
           <SignedIn>
-            <main className={inter.className}>
-              <Component {...pageProps} />
-            </main>
+            <Component {...pageProps} />
           </SignedIn>
           <SignedOut>
             <RedirectToSignIn />

@@ -3,6 +3,11 @@ module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      lineHeight: {
+        title: "120%",
+        subtitle: "150%",
+      },
+
       animation: {
         fadeIn: "fadeIn 0.3s ease",
       },
