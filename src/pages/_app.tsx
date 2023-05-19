@@ -15,7 +15,7 @@ import { api } from "@/utils/api";
 import { useRouter } from "next/router";
 import { AlertProvider } from "@/components/Alert";
 
-const publicPages = ["/login", "/cadastro", "/sobre"];
+const publicPages = ["/login", "/cadastro", "/sobre", "/"];
 
 import { Inter } from "@next/font/google";
 

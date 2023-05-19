@@ -2,6 +2,8 @@ import { CookieConsent } from "@/lib/cookie-consent";
 import { Wrap } from "@/lib/word-wrap";
 
 export function Cookie() {
+  const width = window.innerWidth;
+
   return (
     <CookieConsent
       location="bottom"
@@ -25,7 +27,7 @@ export function Cookie() {
       expires={150}
       style={{
         background: "#110634",
-        fontSize: "28px",
+        fontSize: width > 900 ? "18px" : "28px",
         lineHeight: "150%",
         height: "500px",
         padding: "2rem 2rem",

@@ -33,7 +33,6 @@ export const usersRouter = createTRPCRouter({
         });
       }
 
-      console.log(input.email);
       const userCreated = await ctx.prisma.user.create({
         data: {
           role: input.role,
@@ -71,6 +70,8 @@ export const usersRouter = createTRPCRouter({
     }),
 
   byUserId: privateProcedure.query(async ({ ctx }) => {
+    if (!ctx.currentUser) return;
+
     const user = await ctx.prisma.user.findUnique({
       where: { userId: ctx.currentUser },
       include: {

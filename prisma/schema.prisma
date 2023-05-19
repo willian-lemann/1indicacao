@@ -38,16 +38,35 @@ model Job {
   createdAt   DateTime @default(now())
   user        User?    @relation(fields: [userId], references: [userId])
   userId      String?
+  location    Location @relation(fields: [locationId], references: [id])
+  locationId  String
 
   @@index([userId])
+  @@index([locationId])
   @@map("jobs")
 }
 
+model RandomJob {
+  id          String   @unique @default(uuid())
+  salary      String
+  position    String
+  description String   @db.Text
+  companyName String
+  createdAt   DateTime
+  locationId  String
+  location    Location @relation(fields: [locationId], references: [id])
+
+  @@index([locationId])
+  @@map("random_jobs")
+}
+
 model Location {
-  id    String @unique @default(uuid())
-  name  String
-  code  String
-  users User[]
+  id        String      @unique @default(uuid())
+  name      String
+  code      String
+  users     User[]
+  Job       Job[]
+  RandomJob RandomJob[]
 
   @@map("locations")
 }

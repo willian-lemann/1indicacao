@@ -6,16 +6,25 @@ import { User } from "../types/user";
 export function useAuth() {
   const { isSignedIn, user } = useUser();
   const { signOut } = useClerk();
-  const { data } = api.users.byUserId.useQuery();
 
-  const isEmployer = data?.role === "employer";
-  const isCandidate = data?.role === "candidate";
+  function getUserById() {
+    if (!isSignedIn) return;
+
+    const { data } = api.users.byUserId.useQuery();
+
+    return data;
+  }
+
+  const userData = getUserById();
+
+  const isEmployer = userData?.role === "employer";
+  const isCandidate = userData?.role === "candidate";
 
   const currentUser = {
-    ...data,
+    ...userData,
     email: user?.emailAddresses[0].emailAddress,
     avatar: user?.profileImageUrl,
-    location: data?.location.name,
+    location: userData?.location.name,
   } as User;
 
   function validateIfUserHasFullProfile(user: User) {

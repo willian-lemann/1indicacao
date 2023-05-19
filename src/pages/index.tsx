@@ -12,15 +12,12 @@ import { Header } from "@/features/landing/Header";
 
 export default function Home() {
   return (
-    <>
-      <Cookie />
-      <div>
-        <Header />
-        <Hero />
-        <OurSolution />
-        <Footer />
-      </div>
-    </>
+    <div className="h-screen">
+      <Header />
+      <Hero />
+      <OurSolution />
+      <Footer />
+    </div>
   );
 }
 
