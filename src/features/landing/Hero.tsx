@@ -3,9 +3,9 @@ import { useRouter } from "next/router";
 import { useAuth } from "../authentication/hooks/use-auth";
 import { Logo } from "@/components/Logo";
 
-export function Hero() {
-  const { isSignedIn, isEmployer } = useAuth();
+type HeroProps = { isSignedIn: boolean; isEmployer: boolean };
 
+export function Hero({ isEmployer, isSignedIn }: HeroProps) {
   const router = useRouter();
 
   function handleLogin() {

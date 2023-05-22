@@ -75,6 +75,7 @@ export const jobsRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const { positions, salary, position, description } = input;
 
+      console.log(input);
       const { success } = await rateLimit.limit(String(ctx.currentUser));
 
       if (!success) {

@@ -1,70 +1,46 @@
-import { Logo } from "@/components/Logo";
-import { useAuth } from "@/features/authentication/hooks/use-auth";
-import Link from "next/link";
-import { useRouter } from "next/router";
 import { OurSolution } from "@/features/landing/OurSolution";
 import { Hero } from "@/features/landing/Hero";
 import { Footer } from "@/features/landing/Footer";
 
-import { CookieConsent } from "@/lib/cookie-consent";
-import { Cookie } from "@/components/CookieConsent";
 import { Header } from "@/features/landing/Header";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
 
-export default function Home() {
+import { getSSRAppRouter } from "@/server/api/root";
+import { getAuth } from "@clerk/nextjs/server";
+
+type HomeProps = {
+  isSignedIn: boolean;
+  isEmployer: boolean;
+};
+
+export default function Home({ isSignedIn, isEmployer }: HomeProps) {
   return (
     <div className="h-screen">
-      <Header />
-      <Hero />
+      <Header isSignedIn={isSignedIn} isEmployer={isEmployer} />
+      <Hero isSignedIn={isSignedIn} isEmployer={isEmployer} />
       <OurSolution />
       <Footer />
     </div>
   );
 }
 
-// export const getServerSideProps: GetServerSideProps = async (
-//   context: GetServerSidePropsContext
-// ) => {
-//   const api = getSSRAppRouter(context);
+export const getServerSideProps: GetServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
+  const { userId } = getAuth(context.req);
 
-//   try {
-//     const user = await api.users.byUserId();
+  const api = getSSRAppRouter(context);
 
-//     if (user?.role === "employer") {
-//       return {
-//         redirect: {
-//           permanent: false,
-//           destination: "/empresa",
-//         },
-//         props: {},
-//       };
-//     }
+  let user = null;
 
-//     if (user?.role === "candidate") {
-//       return {
-//         redirect: {
-//           permanent: false,
-//           destination: "/candidato",
-//         },
-//         props: {},
-//       };
-//     }
-//   } catch (error: any) {
-//     if (error.code === "UNAUTHORIZED") {
-//       return {
-//         redirect: {
-//           permanent: false,
-//           destination: "/",
-//         },
-//         props: {},
-//       };
-//     }
-//   }
+  if (userId) {
+    user = await api.users.byUserId();
+  }
 
-//   const locations = await api.locations.getAll();
-
-//   return {
-//     props: {
-//       locations,
-//     },
-//   };
-// };
+  return {
+    props: {
+      isSignedIn: userId,
+      isEmployer: userId && user?.role === "employer",
+    },
+  };
+};

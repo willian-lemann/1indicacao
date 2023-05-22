@@ -1,6 +1,5 @@
 import { api } from "@/utils/api";
 import { useClerk, useUser } from "@clerk/nextjs";
-import { useEffect } from "react";
 import { User } from "../types/user";
 
 export function useAuth() {
@@ -10,9 +9,10 @@ export function useAuth() {
   function getUserById() {
     if (!isSignedIn) return;
 
-    const { data } = api.users.byUserId.useQuery();
+    const data = api.users.byUserId.useQuery();
 
-    return data;
+    const userdata = data?.data;
+    return userdata;
   }
 
   const userData = getUserById();

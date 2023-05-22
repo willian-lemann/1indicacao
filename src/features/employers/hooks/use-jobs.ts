@@ -1,7 +1,6 @@
 import { api } from "@/utils/api";
 import { create } from "@/lib/store";
 import { MyJobsStore } from "../types/myjobs-store";
-import { useEffect } from "react";
 import { useLocations } from "@/features/locations/hooks/use-locations";
 
 const myjobsStore = create<MyJobsStore>()((set, get) => ({
@@ -59,7 +58,6 @@ export function useJobs() {
 
   const jobsFromEmployers = filteredJobsFromEmployers;
 
-  console.log(state.jobs);
   async function deleteJob(id: string) {
     const previousJobs = structuredClone(jobsFromEmployers);
 

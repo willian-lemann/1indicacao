@@ -1,9 +1,5 @@
 import { classnames } from "@/utils/classnames";
-import {
-  HTMLAttributes,
-  HTMLInputTypeAttribute,
-  PropsWithChildren,
-} from "react";
+import { HTMLAttributes, PropsWithChildren } from "react";
 
 type InputProps = HTMLAttributes<HTMLInputElement> & {
   type?: string;

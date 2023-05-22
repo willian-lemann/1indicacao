@@ -25,14 +25,24 @@ export default function EditJob({ id }: EditJobProps) {
       description: job?.description || "",
     },
   });
+
+  console.log("description", job);
+
   const { updateJob } = useJobs();
 
   const { mutateAsync, isLoading } = api.jobs.update.useMutation();
 
   const onSubmit = handleSubmit(async (data) => {
-    const updateData = { ...data, positions: String(data.positions), id };
+    const updateData = {
+      ...data,
+      description: data.description,
+      positions: String(data.positions),
+      id,
+    };
 
-    updateJob(id, data);
+    console.log("teste", data);
+
+    updateJob(id, updateData);
 
     await mutateAsync(updateData);
     addSuccessNotification("Vaga alterada com sucesso!");
@@ -84,7 +94,7 @@ export default function EditJob({ id }: EditJobProps) {
                       as="h3"
                       className="text-lg font-medium leading-6 text-gray-900"
                     >
-                      Cadastrar vaga
+                      Editar vaga
                     </Dialog.Title>
                     <div className="mt-2">
                       <Input
@@ -107,13 +117,13 @@ export default function EditJob({ id }: EditJobProps) {
                         <Input.Label>Remuneração</Input.Label>
                       </Input>
 
-                      <Textarea
+                      <Input
                         className="px-4 py-2 outline-none border border-primary rounded border-opacity-50 mb-4 w-full"
                         placeholder="Descrição da vaga"
                         register={register("position")}
                       >
-                        <Textarea.Label>Cargo ou função</Textarea.Label>
-                      </Textarea>
+                        <Input.Label>Cargo ou função</Input.Label>
+                      </Input>
 
                       <Textarea
                         className="px-4 py-2 outline-none border h-40 border-primary rounded border-opacity-50 mb-4 w-full"

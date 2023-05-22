@@ -46,6 +46,7 @@ export default function AddJob() {
       position: newJob.position,
       positions: Number(newJob.positions),
       salary: newJob.salary,
+      description: String(newJob.description),
     });
 
     router.reload();

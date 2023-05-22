@@ -6,8 +6,9 @@ import { useState } from "react";
 import { classnames } from "@/utils/classnames";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 
-export function Header() {
-  const { isSignedIn, isEmployer } = useAuth();
+type HeaderProps = { isSignedIn: boolean; isEmployer: boolean };
+
+export function Header({ isSignedIn, isEmployer }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
 

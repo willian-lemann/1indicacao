@@ -17,6 +17,7 @@ const Label = ({ children }: PropsWithChildren) => {
 export function Textarea({
   children,
   className,
+  register,
   ...props
 }: PropsWithChildren<TextareaProps>) {
   return (
@@ -29,6 +30,7 @@ export function Textarea({
           String(className),
           "mt-1 w-full outline-none rounded-md border-0 py-3 pl-4 text-primary ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 "
         )}
+        {...register}
       />
     </div>
   );
