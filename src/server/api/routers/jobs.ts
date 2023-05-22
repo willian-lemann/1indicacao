@@ -94,7 +94,7 @@ export const jobsRouter = createTRPCRouter({
         },
       });
 
-      return createdJob;
+      return createdJob.id;
     }),
 
   update: privateProcedure

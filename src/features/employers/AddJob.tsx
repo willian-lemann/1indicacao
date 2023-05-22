@@ -14,6 +14,7 @@ import { useForm } from "react-hook-form";
 import { useAuth } from "../authentication/hooks/use-auth";
 
 import { useJobs } from "./hooks/use-jobs";
+import { classnames } from "@/utils/classnames";
 
 export default function AddJob() {
   const router = useRouter();
@@ -28,7 +29,7 @@ export default function AddJob() {
   const onSubmit = handleSubmit(async (data) => {
     const newJob = { ...data, positions: String(data.positions) };
 
-    await mutateAsync(newJob);
+    const createdJobId = await mutateAsync(newJob);
 
     addSuccessNotification("Vaga salva!");
 
@@ -40,7 +41,7 @@ export default function AddJob() {
         locationId: String(user.locationId),
         name: user.name as string,
       },
-      id: uniqueId,
+      id: createdJobId,
       createdAt: new Date(),
       isActive: true,
       position: newJob.position,
@@ -48,8 +49,6 @@ export default function AddJob() {
       salary: newJob.salary,
       description: String(newJob.description),
     });
-
-    router.reload();
   });
 
   function closeModal() {
@@ -63,8 +62,12 @@ export default function AddJob() {
   return (
     <>
       <button
+        disabled={isLoading}
         onClick={openModal}
-        className="bg-primary px-4 py-2 rounded text-white"
+        className={classnames(
+          isLoading ? "opacity-80" : "opacity-100",
+          "bg-primary px-4 py-2 rounded text-white"
+        )}
       >
         Cadastrar Vaga
       </button>
