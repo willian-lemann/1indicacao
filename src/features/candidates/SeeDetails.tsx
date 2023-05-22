@@ -3,7 +3,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon as CloseIcon } from "@heroicons/react/24/solid";
 import { Fragment, useState } from "react";
 
-type SeeDetailsProps = { name: string | null; description: string | null };
+type SeeDetailsProps = { name?: string | null; description?: string | null };
 
 export function SeeDetails({ name, description }: SeeDetailsProps) {
   const [isOpen, setIsOpen] = useState(false);
