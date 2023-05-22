@@ -76,26 +76,6 @@ export function SeeJobDetails({ id }: SeeJobDetailsProps) {
                       <p className="pt-2">{job?.description || ""}</p>
 
                       <p className="py-4">Salário {job?.salary || ""}</p>
-
-                      <div className="mt-4">
-                        <strong>Contatos:</strong>
-                        <p>{job?.user?.instagram}</p>
-
-                        <div className="flex items-center gap-4">
-                          <p>{job?.user?.phone}</p>
-
-                          {job?.user?.phone ? (
-                            <div className="relative h-6 w-6">
-                              <Image
-                                src="/whatsapp.svg"
-                                alt="whatsapp icon"
-                                className="object-cover text-[0]"
-                                fill
-                              />
-                            </div>
-                          ) : null}
-                        </div>
-                      </div>
                     </div>
                   )}
                 </Dialog.Panel>

@@ -62,26 +62,6 @@ export function Profile() {
           ) : null}
         </div>
 
-        <div className="flex mt-4 space-y-4 md:space-y-0 flex-col md:flex-row items-start w-full justify-between">
-          <Input
-            placeholder="whatsapp"
-            type="number"
-            className="px-4 py-2 outline-none border border-primary rounded"
-            register={register("phone")}
-          >
-            <Input.Label>WhatsApp (opcional)</Input.Label>
-          </Input>
-
-          <Input
-            type="text"
-            placeholder="link do instagram"
-            className="px-4 py-2 outline-none w-[300px] border border-primary rounded"
-            register={register("instagram")}
-          >
-            <Input.Label>Instagram (opcional)</Input.Label>
-          </Input>
-        </div>
-
         <Textarea
           id="description"
           type="text"
