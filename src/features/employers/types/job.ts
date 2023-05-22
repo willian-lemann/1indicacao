@@ -6,5 +6,5 @@ export type Job = {
   user: { name: string | null; locationId: string | null } | null;
   isActive: boolean;
   createdAt: Date;
-  description: string;
+  description: string | null;
 };
